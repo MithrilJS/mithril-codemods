@@ -1,0 +1,32 @@
+{
+  "name": "mithril-codemod",
+  "version": "1.0.0",
+  "description": "Transform mithril@0.2.x code into mithril@1.x using jscodeshift",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "repositor": "tivac/mithril-codemod",
+  "keywords": [
+    "mithril",
+    "codemod",
+    "jscodeshift"
+  ],
+  "author": "Pat Cavit <npm@patcavit.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^3.4.0",
+    "eslint-config-arenanet": "^3.0.1",
+    "jscodeshift": "^0.3.28",
+    "ospec": "^1.0.0"
+  },
+  "eslintConfig": {
+    "extends": "arenanet",
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "newline-per-chained-call": "off"
+    }
+  }
+}
