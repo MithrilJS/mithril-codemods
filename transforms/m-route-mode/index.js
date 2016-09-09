@@ -13,17 +13,12 @@ module.exports = function(file, api) {
 
     return j(file.source)
         .find(j.AssignmentExpression)
-        .filter((p) => {
-            debugger;
-            
-            // TODO: better filtering
-            return (
-                p.get("left").get("object").get("object").value.name === "m" &&
-                p.get("left").get("object").get("property").value.name === "route" &&
-                p.get("left").get("property").get("name").value === "mode" &&
-                p.get("right").value.value in conversion
-            );
-        })
+        .filter((p) => (
+            p.get("left").get("object").get("object").value.name === "m" &&
+            p.get("left").get("object").get("property").value.name === "route" &&
+            p.get("left").get("property").get("name").value === "mode" &&
+            p.get("right").value.value in conversion
+        ))
         .replaceWith((p) => j.callExpression(
             j.memberExpression(
                 j.memberExpression(
@@ -32,9 +27,11 @@ module.exports = function(file, api) {
                 ),
                 j.identifier("prefix")
             ),
-            [ j.literal(
-                conversion[p.get("right").value.value]
-            ) ]
+            [
+                j.literal(
+                    conversion[p.get("right").value.value]
+                )
+            ]
         ))
         .toSource();
 };
