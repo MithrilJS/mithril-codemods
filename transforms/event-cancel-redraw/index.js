@@ -13,7 +13,7 @@ module.exports = function(file, api) {
             p.get("callee").get("object").get("object").getValueProperty("name") === "m" &&
             p.get("callee").get("object").get("property").getValueProperty("name") === "redraw" &&
             p.get("callee").get("property").getValueProperty("name") === "strategy" &&
-            p.get("arguments").get(0).getValueProperty("value") === "none"
+            p.get("arguments", 0).getValueProperty("value") === "none"
         ))
         .replaceWith((p) => {
             // e.redraw = false;
@@ -30,7 +30,7 @@ module.exports = function(file, api) {
             }
 
             // Determine arg name
-            arg = fn.get("params").get(0).getValueProperty("name");
+            arg = fn.get("params", 0).getValueProperty("name");
 
             if(!arg) {
                 return p;
