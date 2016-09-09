@@ -2,7 +2,8 @@
 
 var fs   = require("fs"),
 
-    o = require("ospec"),
+    o         = require("ospec"),
+    disparity = require("disparity"),
     
     transforms = fs.readdirSync("./transforms");
 
@@ -10,7 +11,7 @@ o.spec("mithril-codemod", () => {
     transforms.forEach((t) => o(t, () => {
         var fn    = require(`../transforms/${t}/`),
             input = `./transforms/${t}/_input.js`,
-            result;
+            result, diff;
         
         result = fn({
             path   : input,
@@ -19,7 +20,14 @@ o.spec("mithril-codemod", () => {
             jscodeshift : require("jscodeshift")
         });
 
-        o(result).equals(fs.readFileSync(`./transforms/${t}/_output.js`, "utf8"));
+        diff = disparity.unified(fs.readFileSync(`./transforms/${t}/_output.js`, "utf8"), result, {
+            paths : [
+                `/transforms/${t}/_input.js (transformed)`,
+                `./transforms/${t}/_output.js`
+            ]
+        });
+
+        o(diff).equals("")(`\n${diff}`);
     }));
 });
 
