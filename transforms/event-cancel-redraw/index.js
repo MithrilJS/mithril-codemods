@@ -7,7 +7,6 @@ module.exports = function(file, api) {
 
     return j(file.source)
         .find(j.CallExpression)
-        // m.redraw.strategy("none")
         .filter((p) => (
             p.get("callee").get("object").value &&
             p.get("callee").get("object").get("object").getValueProperty("name") === "m" &&
@@ -16,7 +15,6 @@ module.exports = function(file, api) {
             p.get("arguments", 0).getValueProperty("value") === "none"
         ))
         .replaceWith((p) => {
-            // e.redraw = false;
             var fn = p,
                 arg;
 
