@@ -10,9 +10,9 @@ Use [`jscodeshift`](https://github.com/facebook/jscodeshift) to help automate th
 - [x] `m.route.mode` -> `m.route.prefix()`
 - [x] `m.redraw.strategy("none")` -> `e.redraw = false`
 - [x] `m.route()`/`m.route("route")` -> `m.route.get()`/`m.route.set("route")`
+- [x] `config: m.route` -> `oncreate: m.route.link`
 - [ ] Component options -> `vnode.attrs`
 - [ ] `m.route.param()` -> `vnode.attrs`
-- [ ] `config: m.route` -> `oncreate: m.route.link`
 
 ## Potentially Unsafe Transforms
 
