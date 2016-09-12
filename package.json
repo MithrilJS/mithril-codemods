@@ -4,7 +4,9 @@
   "description": "Transform mithril@0.2.x code into mithril@1.x using jscodeshift",
   "main": "index.js",
   "scripts": {
-    "test": "node test"
+    "lint": "eslint .",
+    "ospec": "node test",
+    "test": "npm run lint && npm run ospec"
   },
   "repositor": "tivac/mithril-codemod",
   "keywords": [
