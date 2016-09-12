@@ -11,10 +11,10 @@ Use [`jscodeshift`](https://github.com/facebook/jscodeshift) to help automate th
 - [x] `m.redraw.strategy("none")` -> `e.redraw = false`
 - [x] `m.route()`/`m.route("route")` -> `m.route.get()`/`m.route.set("route")`
 - [x] `config: m.route` -> `oncreate: m.route.link`
+- [x] `m.route.param()` -> `vnode.attrs`
 - [ ] Component options -> `vnode.attrs`
-- [ ] `m.route.param()` -> `vnode.attrs`
 
-## Potentially Unsafe Transforms
+## Unsafe Transforms
 
 - [ ] Unwrapped components -> Wrapped components
 - [ ] `config` -> `onupdate`

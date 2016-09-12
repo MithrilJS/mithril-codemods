@@ -31,5 +31,8 @@
     "rules": {
       "newline-per-chained-call": "off"
     }
+  },
+  "dependencies": {
+    "to-js-identifier": "^1.0.0"
   }
 }
