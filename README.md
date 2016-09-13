@@ -12,11 +12,11 @@ Use [`jscodeshift`](https://github.com/facebook/jscodeshift) to help automate th
 - [x] `m.route()`/`m.route("route")` -> `m.route.get()`/`m.route.set("route")`
 - [x] `config: m.route` -> `oncreate: m.route.link`
 - [x] `m.route.param()` -> `vnode.attrs`
+- [x] Unwrapped components -> Wrapped components (for `m.mount`)
 - [ ] Component options -> `vnode.attrs`
 
 ## Unsafe Transforms
 
-- [ ] Unwrapped components -> Wrapped components
 - [ ] `config` -> `onupdate`
 - [ ] Raw vnodes in `m.mount()`/`m.route()` -> Component wrapped vnodes
 - [ ] `m.request().then()` -> `m.request().run()`
