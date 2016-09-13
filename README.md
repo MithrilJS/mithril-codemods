@@ -14,9 +14,9 @@ Use [`jscodeshift`](https://github.com/facebook/jscodeshift) to help automate th
 - [x] `m.route.param()` 👉🏻 `vnode.attrs` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#accessing-route-params)
 - [x] Raw vnodes in `m.mount()`/`m.route()` 👉🏻 Component wrapped vnodes [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-vnodes-to-mmount-and-mroute)
 - [x] Component options 👉🏻 `vnode.attrs` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#component-arguments)
+- [x] ⚠️ `m()` unwrapped components 👉🏻 wrapped components️ [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-components-to-m)
 - [ ] ⚠️ `config` 👉🏻 `onupdate` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function)
 - [ ] ⚠️ `m.request().then()` 👉🏻 `m.request().run()` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest)
-- [x] ⚠️ `m()` unwrapped components 👉🏻 wrapped components️ [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-components-to-m)
 
 ## Key
 
