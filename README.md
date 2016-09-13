@@ -16,7 +16,7 @@ Use [`jscodeshift`](https://github.com/facebook/jscodeshift) to help automate th
 - [x] Component options 👉🏻 `vnode.attrs` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#component-arguments)
 - [ ] ⚠️ `config` 👉🏻 `onupdate` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function)
 - [ ] ⚠️ `m.request().then()` 👉🏻 `m.request().run()` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest)
-- [ ] ⚠️ `m()` unwrapped components 👉🏻 wrapped components️ [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-components-to-m)
+- [x] ⚠️ `m()` unwrapped components 👉🏻 wrapped components️ [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-components-to-m)
 
 ## Key
 

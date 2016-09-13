@@ -1,0 +1,5 @@
+m("div", {
+    view : function() {
+
+    }
+}, {});
