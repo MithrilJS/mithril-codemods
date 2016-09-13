@@ -1,5 +1,5 @@
 m.mount(document.body, {
-    oninit: function() {
-        // ...
+    oninit: function(options) {
+        options.attrs.fooga;
     }
 });

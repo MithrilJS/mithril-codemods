@@ -1,5 +1,5 @@
 m.mount(document.body, {
-    controller : function() {
-        // ...
+    controller : function(options) {
+        options.fooga;
     }
 });
