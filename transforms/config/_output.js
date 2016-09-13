@@ -15,5 +15,7 @@ m("div", {
 
     oninit: function(vnode) {
         vnode.dom.style.color = "red";
+
+        return;
     }
 });
