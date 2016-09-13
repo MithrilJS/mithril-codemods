@@ -2,6 +2,8 @@
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#component-controller-function
 // Convert `controller` object properties (that are functions) to be called `oninit` instead
+// TODO: Convert the first arg (if it exists) to be called `vnode`
+// TODO: Convert access to properties of the first arg to instead access `vnode.attrs`
 module.exports = function(file, api) {
     var j = api.jscodeshift;
 
