@@ -16,8 +16,12 @@ module.exports = function(file, api) {
                 o = o.get("callee", "object");
             }
 
-            if(o.get("callee", "object").getValueProperty("name") !== "m" &&
-               o.get("callee", "property").getValueProperty("name") !== "sync") {
+            if(
+                !o.get("callee", "object").value ||
+                !o.get("callee", "property").value ||
+                o.get("callee", "object").getValueProperty("name") !== "m" ||
+                o.get("callee", "property").getValueProperty("name") !== "sync"
+            ) {
                 return false;
             }
             
