@@ -12,22 +12,22 @@ module.exports = function(file, api) {
             // Walk all the way down and check for m.request()
             var o = p.get("object");
 
-            while(j.CallExpression.check(o.get("callee", "object").node)) {
+            while(o.get("callee").value && j.CallExpression.check(o.get("callee", "object").node)) {
                 o = o.get("callee", "object");
             }
 
-            if(
-                !o.get("callee", "object").value ||
-                !o.get("callee", "property").value ||
-                o.get("callee", "object").getValueProperty("name") !== "m" ||
-                o.get("callee", "property").getValueProperty("name") !== "sync"
+            if(o.get("callee").value &&
+               o.get("callee", "object").value &&
+               o.get("callee", "property").value &&
+               o.get("callee", "object").getValueProperty("name") !== "m" &&
+               o.get("callee", "property").getValueProperty("name") !== "sync"
             ) {
-                return false;
-            }
-            
-            p.ref = o.get("callee");
+                p.ref = o.get("callee");
 
-            return true;
+                return true;
+            }
+
+            return false;
         })
         .replaceWith((p) => {
             // rewrite m.sync as m.prop.merge
