@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint no-console:"off" */
 "use strict";
 
 var meow   = require("meow"),
@@ -26,12 +27,12 @@ var meow   = require("meow"),
         }
     }),
     
-    opts = Object.assign({}, {
-        env : Object.assign({}, process.env, {
+    opts = {
+        stdio : "inherit",
+        env   : Object.assign({}, process.env, {
             PATH : path({ cwd : __dirname })
-        }),
-        stdio : "inherit"
-    });
+        })
+    };
     
 globby(cli.input.length ? cli.input : [ "**" ])
     .then((paths) => series(
@@ -43,10 +44,7 @@ globby(cli.input.length ? cli.input : [ "**" ])
                 "jscodeshift",
                 [ "-t", transform, cli.run ? "" : "-d" ].concat(paths),
                 opts
-            );
+            )
+            .then((result) => console.log(`${transform} complete\n`, result.stdout, `\n`));
         }
-    ))
-    .then((results) => results.forEach(
-        (result, idx) => console.log(`${transforms[idx]} result:\n${result.stdout}`)
-    ))
-    .catch(console.error.bind(console));
+    ));
