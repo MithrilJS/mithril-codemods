@@ -22,11 +22,21 @@ module.exports = function(file, api) {
             if(j.Identifier.check(arg.node)) {
                 arg = arg.getValueProperty("name");
                 
+                
                 j(p.get("value", "body").node)
                     .find(j.Identifier)
-                    .filter((p2) => (
-                        p2.getValueProperty("name") === arg
-                    ))
+                    .filter((p2) => {
+                        // table stakes
+                        if(p2.getValueProperty("name") !== arg) {
+                            return false;
+                        }
+                        
+                        if(j.MemberExpression.check(p2.parent.node)) {
+                            return p2.parent.get("object") === p2;
+                        }
+
+                        return true;
+                    })
                     .forEach(() => s(`${arg}.attrs`))
                     .replaceWith(j.memberExpression(
                         j.identifier(arg),
