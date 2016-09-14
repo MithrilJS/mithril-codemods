@@ -5,8 +5,10 @@ var identifier = require("to-js-identifier");
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#accessing-route-params
 // Converts m.route.param(<param>) to vnode.attrs.<param>
 //
-// TODO: Doesn't automatically add vnode param is missing
+// TODO: Doesn't automatically add vnode param if missing
 // TODO: Doesn't respect existing vnode param name
+//      Those are both really hard to solve because finding the correct function scope
+//      to use is tricky at best
 module.exports = function(file, api) {
     var j = api.jscodeshift;
 
