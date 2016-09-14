@@ -1,7 +1,22 @@
-mithril-codemod
-===============
+mithril-codemods
+================
 
 Use [`jscodeshift`](https://github.com/facebook/jscodeshift) to help automate the transition from `mithril@0.2.x` to `mithril@1.x` based on the sections of the [Migration Guide](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md)
+
+## Usage
+
+```
+> npm i -g mithril-codemods
+> mithril-codemods --help
+
+Transform mithril@0.2.x code into mithril@1.x using jscodeshift
+
+Usage
+$ mithril-codemods [<file|glob> ...]
+
+Options
+--run,    -r    Run transforms
+```
 
 ## Transforms
 
@@ -17,9 +32,9 @@ Use [`jscodeshift`](https://github.com/facebook/jscodeshift) to help automate th
 - [x] ⚠️ `m()` unwrapped components 👉🏻 wrapped components️ [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-components-to-m)
 - [x] ⚠️ `config` 👉🏻 `oninit`/`onupdate` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function)
 - [x] ⚠️ `m.request().then()` 👉🏻 `m.request().run()` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest)
-- [x] ⚠ `m.sync` 👉🏻 `m.prop.merge` [](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest)
+- [x] ⚠ `m.sync` 👉🏻 `m.prop.merge` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest)
 
-## Key
+### Key
 
 - ⚠️ Potentially unsafe transform
 - 📓 Mithril rewrite migration docs
