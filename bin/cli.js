@@ -33,7 +33,13 @@ var meow   = require("meow"),
             PATH : path({ cwd : __dirname })
         })
     };
-    
+
+if(!cli.input.length) {
+    cli.showHelp();
+
+    return;
+}
+
 globby(cli.input.length ? cli.input : [ "**" ])
     .then((paths) => series(
         transforms,
