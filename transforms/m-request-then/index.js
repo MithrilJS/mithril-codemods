@@ -13,11 +13,12 @@ module.exports = function(file, api) {
             // Walk all the way down and check for m.request()
             var o = p.get("object");
 
-            while(j.CallExpression.check(o.get("callee", "object").node)) {
+            while(o.get("callee").value && j.CallExpression.check(o.get("callee", "object").node)) {
                 o = o.get("callee", "object");
             }
 
             return (
+                o.get("callee").value &&
                 o.get("callee", "object").value &&
                 o.get("callee", "object").getValueProperty("name") === "m" &&
                 o.get("callee", "property").value &&
