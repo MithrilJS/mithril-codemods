@@ -42,7 +42,7 @@ globby(cli.input.length ? cli.input : [ "**" ])
 
             return execa(
                 path.resolve(__dirname, "../node_modules/.bin/jscodeshift"),
-                [ "-t", transform, cli.run ? "" : "-d" ].concat(paths),
+                [ "-t", transform, cli.flags.run ? "" : "-d" ].concat(paths),
                 { stdio : "inherit" }
             )
             .then((result) => console.log(`${result.stdout}\n`))
