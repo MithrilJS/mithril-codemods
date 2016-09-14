@@ -18,9 +18,9 @@ module.exports = function(file, api) {
 
             if(o.get("callee").value &&
                o.get("callee", "object").value &&
+               o.get("callee", "object").getValueProperty("name") === "m" &&
                o.get("callee", "property").value &&
-               o.get("callee", "object").getValueProperty("name") !== "m" &&
-               o.get("callee", "property").getValueProperty("name") !== "sync"
+               o.get("callee", "property").getValueProperty("name") === "sync"
             ) {
                 p.ref = o.get("callee");
 
