@@ -9,7 +9,7 @@
     "ospec": "node test",
     "test": "npm run lint && npm run ospec"
   },
-  "repositor": "tivac/mithril-codemod",
+  "repository": "tivac/mithril-codemod",
   "keywords": [
     "mithril",
     "codemod",
@@ -17,6 +17,14 @@
   ],
   "author": "Pat Cavit <npm@patcavit.com>",
   "license": "MIT",
+  "dependencies": {
+    "execa": "^0.4.0",
+    "globby": "^6.0.0",
+    "jscodeshift": "^0.3.28",
+    "meow": "^3.7.0",
+    "promise-map-series": "^0.2.3",
+    "to-js-identifier": "^1.0.0"
+  },
   "devDependencies": {
     "disparity": "^2.0.0",
     "eslint": "^3.4.0",
@@ -31,14 +39,5 @@
     "rules": {
       "newline-per-chained-call": "off"
     }
-  },
-  "dependencies": {
-    "execa": "^0.4.0",
-    "globby": "^6.0.0",
-    "jscodeshift": "^0.3.28",
-    "meow": "^3.7.0",
-    "npm-run-path": "^1.0.0",
-    "promise-map-series": "^0.2.3",
-    "to-js-identifier": "^1.0.0"
   }
 }

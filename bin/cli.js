@@ -2,9 +2,10 @@
 /* eslint no-console:"off" */
 "use strict";
 
-var meow   = require("meow"),
+var path = require("path"),
+
+    meow   = require("meow"),
     execa  = require("execa"),
-    path   = require("npm-run-path"),
     globby = require("globby"),
     series = require("promise-map-series"),
 
@@ -25,14 +26,7 @@ var meow   = require("meow"),
             r : "run",
             h : "help"
         }
-    }),
-    
-    opts = {
-        stdio : "inherit",
-        env   : Object.assign({}, process.env, {
-            PATH : path({ cwd : __dirname })
-        })
-    };
+    });
 
 if(!cli.input.length) {
     cli.showHelp();
@@ -42,15 +36,16 @@ if(!cli.input.length) {
 
 globby(cli.input.length ? cli.input : [ "**" ])
     .then((paths) => series(
-        transforms,
-        (transform) => {
-            console.log(`${transform} running`);
+        transforms.transforms,
+        (transform, idx) => {
+            console.log(`${transforms.names[idx]} running`);
 
             return execa(
-                "jscodeshift",
+                path.resolve(__dirname, "../node_modules/.bin/jscodeshift"),
                 [ "-t", transform, cli.run ? "" : "-d" ].concat(paths),
-                opts
+                { stdio : "inherit" }
             )
-            .then((result) => console.log(`${transform} complete\n`, result.stdout, `\n`));
+            .then((result) => console.log(`${result.stdout}\n`))
+            .catch(console.error.bind(console));
         }
     ));

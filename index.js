@@ -1,8 +1,9 @@
 "use strict";
 
 var fs   = require("fs"),
-    path = require("path");
+    path = require("path"),
+    
+    dirs = fs.readdirSync(path.join(__dirname, "/transforms"));
 
-module.exports = fs.readdirSync(path.join(__dirname, "/transforms")).map(
-    (t) => path.join(__dirname, `./transforms/${t}/index.js`)
-);
+exports.transforms = dirs.map((t) => path.join(__dirname, `./transforms/${t}/index.js`));
+exports.names = dirs;
