@@ -9,8 +9,10 @@ module.exports = function(file, api) {
     return j(file.source)
         .find(j.CallExpression)
         .filter((p) => (
-            p.get("callee").get("object").getValueProperty("name") === "m" &&
-            p.get("callee").get("property").getValueProperty("name") === "route"
+            p.get("callee", "object").value &&
+            p.get("callee", "object").getValueProperty("name") === "m" &&
+            p.get("callee", "property").value &&
+            p.get("callee", "property").getValueProperty("name") === "route"
         ))
         .replaceWith((p) => {
             var args = p.get("arguments").value,

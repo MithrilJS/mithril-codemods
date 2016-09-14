@@ -13,11 +13,12 @@ module.exports = function(file, api) {
     return j(file.source)
         .find(j.CallExpression)
         .filter((p) => (
+            p.get("callee", "object").value &&
             p.get("callee", "object", "object").value &&
-            p.get("callee", "object", "property").value &&
-            p.get("callee", "property").value &&
             p.get("callee", "object", "object").getValueProperty("name") === "m" &&
+            p.get("callee", "object", "property").value &&
             p.get("callee", "object", "property").getValueProperty("name") === "route" &&
+            p.get("callee", "property").value &&
             p.get("callee", "property").getValueProperty("name") === "param"
         ))
         .replaceWith((p) => {
