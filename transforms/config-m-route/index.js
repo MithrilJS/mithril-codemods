@@ -9,9 +9,12 @@ module.exports = function(file, api) {
     return j(file.source)
         .find(j.Property)
         .filter((p) => (
+            p.get("key").value &&
             p.get("key").getValueProperty("name") === "config" &&
-            p.get("value").get("object").getValueProperty("name") === "m" &&
-            p.get("value").get("property").getValueProperty("name") === "route"
+            p.get("value", "object").value &&
+            p.get("value", "object").getValueProperty("name") === "m" &&
+            p.get("value", "property").value &&
+            p.get("value", "property").getValueProperty("name") === "route"
         ))
         .forEach(() => s("config: m.route"))
         .replaceWith(() => j.property(
