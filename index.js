@@ -2,7 +2,4 @@
 
 var fs = require("fs");
 
-fs.readdirSync("./transforms").forEach((t) => {
-    exports[t] = require(`./transforms/${t}`);
-});
-
+module.exports = fs.readdirSync("./transforms").map((t) => `./transforms/${t}/index.js`);
