@@ -1,13 +1,15 @@
 {
   "name": "mithril-codemods",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Transform mithril@0.2.x code into mithril@1.x using jscodeshift",
   "main": "index.js",
   "bin": "./bin/cli.js",
   "scripts": {
     "lint": "eslint .",
     "ospec": "node test",
-    "test": "npm run lint && npm run ospec"
+    "test": "npm run lint && npm run ospec",
+    "publish-please": "publish-please",
+    "prepublish": "publish-please guard"
   },
   "repository": "tivac/mithril-codemod",
   "keywords": [
@@ -29,7 +31,8 @@
     "disparity": "^2.0.0",
     "eslint": "^3.4.0",
     "eslint-config-arenanet": "^3.0.1",
-    "ospec": "^1.0.0"
+    "ospec": "^1.0.0",
+    "publish-please": "^2.2.0"
   },
   "eslintConfig": {
     "extends": "arenanet",
