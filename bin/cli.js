@@ -37,7 +37,7 @@ globby(cli.input.length ? cli.input : [ "**" ])
     .then((paths) => series(
         transforms,
         (transform) => {
-            console.log(`Running: ${transform}`);
+            console.log(`${transform} running`);
 
             return execa(
                 "jscodeshift",
