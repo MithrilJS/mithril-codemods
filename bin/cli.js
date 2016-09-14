@@ -16,13 +16,11 @@ var path = require("path"),
         $ mithril-codemods [<file|glob> ...]
 
         Options
-        --unsafe, -u    Use unsafe transforms
         --run,    -r    Run transforms
     `, {
-        boolean : [ "unsafe", "run" ],
+        boolean : [ "run" ],
         string  : [ "_" ],
         alias   : {
-            u : "unsafe",
             r : "run",
             h : "help"
         }
@@ -34,7 +32,7 @@ if(!cli.input.length) {
     return;
 }
 
-globby(cli.input.length ? cli.input : [ "**" ])
+globby(cli.input)
     .then((paths) => series(
         transforms.transforms,
         (transform, idx) => {

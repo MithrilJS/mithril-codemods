@@ -9,7 +9,8 @@
     "ospec": "node test",
     "test": "npm run lint && npm run ospec",
     "publish-please": "publish-please",
-    "prepublish": "publish-please guard"
+    "prepublish": "publish-please guard",
+    "preversion": "npm test"
   },
   "repository": "tivac/mithril-codemod",
   "keywords": [
