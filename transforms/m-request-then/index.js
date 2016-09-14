@@ -5,7 +5,7 @@
 module.exports = function(file, api) {
     var j = api.jscodeshift,
         s = api.stats;
-
+    
     return j(file.source)
         .find(j.MemberExpression)
         .filter((p) => p.get("property").getValueProperty("name") === "then")
@@ -18,7 +18,9 @@ module.exports = function(file, api) {
             }
 
             return (
+                o.get("callee", "object").value &&
                 o.get("callee", "object").getValueProperty("name") === "m" &&
+                o.get("callee", "property").value &&
                 o.get("callee", "property").getValueProperty("name") === "request"
             );
         })
