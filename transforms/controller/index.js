@@ -4,7 +4,8 @@
 // Convert `controller` object properties (that are functions) to be called `oninit` instead
 // Convert any access to the first param to use <param>.attrs.<key> instead
 module.exports = function(file, api) {
-    var j = api.jscodeshift;
+    var j = api.jscodeshift,
+        s = api.stats;
 
     return j(file.source)
         .find(j.Property)
@@ -12,6 +13,7 @@ module.exports = function(file, api) {
             p.get("key").getValueProperty("name") === "controller" &&
             j.FunctionExpression.check(p.get("value").node)
         ))
+        .forEach(() => s("controller property"))
         .replaceWith((p) => {
             var fn  = p.get("value"),
                 arg = fn.get("params", 0);
@@ -25,6 +27,7 @@ module.exports = function(file, api) {
                     .filter((p2) => (
                         p2.getValueProperty("name") === arg
                     ))
+                    .forEach(() => s(`${arg}.attrs`))
                     .replaceWith(j.memberExpression(
                         j.identifier(arg),
                         j.identifier("attrs")

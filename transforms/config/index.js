@@ -3,7 +3,8 @@
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function
 // Rewrite all `config` function instances into either oninit/onupdate
 module.exports = function(file, api) {
-    var j = api.jscodeshift;
+    var j = api.jscodeshift,
+        s = api.stats;
 
     return j(file.source)
         .find(j.Property)
@@ -11,6 +12,7 @@ module.exports = function(file, api) {
             p.get("key").getValueProperty("name") === "config" &&
             j.FunctionExpression.check(p.get("value").node)
         ))
+        .forEach(() => s("config function"))
         .replaceWith((p) => {
             var params = p.get("value", "params"),
                 el, init, state, vdom;
@@ -33,6 +35,7 @@ module.exports = function(file, api) {
                     .filter((p2) => (
                         p2.getValueProperty("name") === el
                     ))
+                    .forEach(() => s("vnode reference"))
                     .replaceWith(j.memberExpression(
                         j.identifier("vnode"),
                         j.identifier("dom")
@@ -51,6 +54,7 @@ module.exports = function(file, api) {
                     .filter((p2) => (
                         p2.getValueProperty("name") === vdom
                     ))
+                    .forEach(() => s("vdom reference"))
                     .replaceWith(j.identifier("vnode"));
             }
 
@@ -66,6 +70,7 @@ module.exports = function(file, api) {
                     .filter((p2) => (
                         p2.getValueProperty("name") === state
                     ))
+                    .forEach(() => s("state reference"))
                     .replaceWith(j.memberExpression(
                         j.identifier("vnode"),
                         j.identifier("state")
@@ -87,6 +92,7 @@ module.exports = function(file, api) {
                         p2.get("test", "argument").value &&
                         p2.get("test", "argument").getValueProperty("name") === init
                     ))
+                    .forEach(() => s(`!${init} statement`))
                     .replaceWith((p2) => {
                         // First add the if statement body as an oninit method
                         p.parent.get("properties").push(j.property(

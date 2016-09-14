@@ -3,7 +3,8 @@
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-components-to-m
 // Attempt to ensure that components as args to `m()` are wrapped in their own `m(<component)`
 module.exports = function(file, api) {
-    var j = api.jscodeshift;
+    var j = api.jscodeshift,
+        s = api.stats;
 
     return j(file.source)
         .find(j.CallExpression)
@@ -23,10 +24,14 @@ module.exports = function(file, api) {
                     )).length
                 ))
                 // Wrap with `m()`
-                .forEach((p2) => p2.replace(j.callExpression(
-                    j.identifier("m"),
-                    [ p2.node ]
-                )));
+                .forEach((p2) => {
+                    s("Unwrapped component");
+
+                    return p2.replace(j.callExpression(
+                        j.identifier("m"),
+                        [ p2.node ]
+                    ));
+                });
             
             return p.node;
         })
