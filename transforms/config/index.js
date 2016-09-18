@@ -1,7 +1,7 @@
 "use strict";
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function
-// Rewrite all `config` function instances into either oninit/onupdate
+// Rewrite all `config` function instances into either oncreate/onupdate
 module.exports = function(file, api) {
     var j = api.jscodeshift,
         s = api.stats;
@@ -22,11 +22,11 @@ module.exports = function(file, api) {
 
             // Check for 1st arg, `el`, and rewrite as `vnode.dom`
             // This one is done early so the rewrites are already done
-            // before the potential oninit/onupdate split down below
+            // before the potential oncreate/onupdate split down below
             el = params.get(0);
             if(el.value) {
                 el = el.getValueProperty("name");
-                
+
                 params.get(0).replace(j.identifier("vnode"));
 
                 // Update any element references to use vnode.dom
@@ -41,7 +41,7 @@ module.exports = function(file, api) {
                         j.identifier("dom")
                     ));
             }
-            
+
             // Check for 4th arg, `vdom`, and rewrite as `vnode`
             vdom = params.get(3);
             if(vdom.value) {
@@ -77,14 +77,14 @@ module.exports = function(file, api) {
                     ));
             }
 
-            // If it uses isInitialized need to split between oninit/onupdate
+            // If it uses isInitialized need to split between oncreate/onupdate
             init = params.get(1);
             if(init.value) {
                 init = init.getValueProperty("name");
 
                 params.get(1).replace();
 
-                // Find a conditional using `!<init>` and use the body as `oninit`
+                // Find a conditional using `!<init>` and use the body as `oncreate`
                 j(p.get("value").node)
                     .find(j.IfStatement)
                     .filter((p2) => (
@@ -94,10 +94,10 @@ module.exports = function(file, api) {
                     ))
                     .forEach(() => s(`!${init} statement`))
                     .replaceWith((p2) => {
-                        // First add the if statement body as an oninit method
+                        // First add the if statement body as an oncreate method
                         p.parent.get("properties").push(j.property(
                             "init",
-                            j.identifier("oninit"),
+                            j.identifier("oncreate"),
                             j.functionExpression(
                                 null,
                                 [ j.identifier("vnode") ],
@@ -109,7 +109,7 @@ module.exports = function(file, api) {
                         return null;
                     });
             }
-            
+
             return p.node;
         })
         .toSource();
