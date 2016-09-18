@@ -13,7 +13,7 @@ m("div", {
         vnode.dom.style.color = "blue";
     },
 
-    oninit: function(vnode) {
+    oncreate: function(vnode) {
         vnode.dom.style.color = "red";
 
         return;
