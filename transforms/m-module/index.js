@@ -7,11 +7,12 @@ module.exports = function(file, api) {
 
     return j(file.source)
         .find(j.MemberExpression, {
-          object: { name: "m" },
-          property: { name: "module" },
+            object   : { name : "m" },
+            property : { name : "module" }
         })
         .replaceWith((p) => {
             p.node.property.name = "mount";
+            
             return p.node;
         })
         .toSource();
