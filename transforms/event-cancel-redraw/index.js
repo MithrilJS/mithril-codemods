@@ -9,18 +9,17 @@ module.exports = function(file, api) {
         s = api.stats;
 
     return j(file.source)
-        .find(j.CallExpression)
-        .filter((p) => (
-            p.get("callee", "object").value &&
-            p.get("callee", "object", "object").value &&
-            p.get("callee", "object", "object").getValueProperty("name") === "m" &&
-            p.get("callee", "object", "property").value &&
-            p.get("callee", "object", "property").getValueProperty("name") === "redraw" &&
-            p.get("callee", "property").value &&
-            p.get("callee", "property").getValueProperty("name") === "strategy" &&
-            p.get("arguments", 0).value &&
-            p.get("arguments", 0).getValueProperty("value") === "none"
-        ))
+        .find(j.CallExpression, {
+            callee : {
+                object : {
+                    object   : { name : "m" },
+                    property : { name : "redraw" }
+                },
+                property : { name : "strategy" }
+            },
+
+            arguments : [{ value : "none" }]
+        })
         .replaceWith((p) => {
             var fn = p.scope.path,
                 arg;

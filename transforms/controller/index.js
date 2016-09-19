@@ -8,11 +8,10 @@ module.exports = function(file, api) {
         s = api.stats;
 
     return j(file.source)
-        .find(j.Property)
-        .filter((p) => (
-            p.get("key").getValueProperty("name") === "controller" &&
-            j.FunctionExpression.check(p.get("value").node)
-        ))
+        .find(j.Property, {
+            key   : { name : "controller" },
+            value : { type : "FunctionExpression" }
+        })
         .forEach(() => s("controller property"))
         .replaceWith((p) => {
             var fn  = p.get("value"),
@@ -22,10 +21,8 @@ module.exports = function(file, api) {
             if(j.Identifier.check(arg.node)) {
                 arg = arg.getValueProperty("name");
                 
-                
                 j(p.get("value", "body").node)
-                    .find(j.Identifier)
-                    .filter((p2) => p2.getValueProperty("name") === arg)
+                    .find(j.Identifier, { name : arg })
                     .filter((p2) => (j.MemberExpression.check(p2.parent.node) ?
                         p2.parent.get("object") === p2 :
                         true

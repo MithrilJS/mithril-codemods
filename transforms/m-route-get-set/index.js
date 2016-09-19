@@ -7,13 +7,12 @@ module.exports = function(file, api) {
     var j = api.jscodeshift;
 
     return j(file.source)
-        .find(j.CallExpression)
-        .filter((p) => (
-            p.get("callee", "object").value &&
-            p.get("callee", "object").getValueProperty("name") === "m" &&
-            p.get("callee", "property").value &&
-            p.get("callee", "property").getValueProperty("name") === "route"
-        ))
+        .find(j.CallExpression, {
+            callee : {
+                object   : { name : "m" },
+                property : { name : "route" }
+            }
+        })
         .replaceWith((p) => {
             var args = p.get("arguments").value,
                 type = "get";

@@ -7,15 +7,13 @@ module.exports = function(file, api) {
         s = api.stats;
 
     return j(file.source)
-        .find(j.Property)
-        .filter((p) => (
-            p.get("key").value &&
-            p.get("key").getValueProperty("name") === "config" &&
-            p.get("value", "object").value &&
-            p.get("value", "object").getValueProperty("name") === "m" &&
-            p.get("value", "property").value &&
-            p.get("value", "property").getValueProperty("name") === "route"
-        ))
+        .find(j.Property, {
+            key   : { name : "config" },
+            value : {
+                object   : { name : "m" },
+                property : { name : "route" }
+            }
+        })
         .forEach(() => s("config: m.route"))
         .replaceWith(() => j.property(
             "init",

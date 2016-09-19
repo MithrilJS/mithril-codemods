@@ -7,33 +7,22 @@ module.exports = function(file, api) {
         s = api.stats;
 
     return j(file.source)
-        .find(j.CallExpression)
-        .filter((p) => (
-            p.get("callee").getValueProperty("name") === "m"
-        ))
-        .replaceWith((p) => {
-            // Walk function arguments, filter to object expressions
-            p.get("arguments")
-                .filter((p2) => (
-                    j.ObjectExpression.check(p2.node)
-                ))
-                // filter to objects with a "view" property
-                .filter((p2) => (
-                    p2.get("properties").filter((p3) => (
-                        p3.get("key").getValueProperty("name") === "view"
-                    )).length
-                ))
-                // Wrap with `m()`
-                .forEach((p2) => {
-                    s("Unwrapped component");
-
-                    return p2.replace(j.callExpression(
-                        j.identifier("m"),
-                        [ p2.node ]
-                    ));
-                });
-            
-            return p.node;
+        .find(j.CallExpression, {
+            callee : { name : "m" }
+        })
+        .forEach((p) => {
+            // Walk function arguments, find things that look like components, wrap with `m()`
+            j(p.get("arguments"))
+                .find(j.ObjectExpression, {
+                    properties : [
+                        { key : { name : "view" } }
+                    ]
+                })
+                .forEach(() => s("Unwrapped component"))
+                .replaceWith((p2) => j.callExpression(
+                    j.identifier("m"),
+                    [ p2.node ]
+                ));
         })
         .toSource();
 };
