@@ -24,7 +24,7 @@ o.spec("mithril-codemod", () => {
             stats : noop
         });
 
-        diff = disparity.unified(fs.readFileSync(`./transforms/${t}/_output.js`, "utf8"), result, {
+        diff = disparity.unified(fs.readFileSync(`./transforms/${t}/_output.js`, "utf8").trim(), result.trim(), {
             paths : [
                 `/transforms/${t}/_input.js (transformed)`,
                 `./transforms/${t}/_output.js`
