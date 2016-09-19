@@ -7,11 +7,10 @@ module.exports = function(file, api) {
         s = api.stats;
 
     return j(file.source)
-        .find(j.Property)
-        .filter((p) => (
-            p.get("key").getValueProperty("name") === "config" &&
-            j.FunctionExpression.check(p.get("value").node)
-        ))
+        .find(j.Property, {
+            key   : { name : "config" },
+            value : { type : "FunctionExpression" }
+        })
         .forEach(() => s("config function"))
         .replaceWith((p) => {
             var params = p.get("value", "params"),
@@ -31,10 +30,7 @@ module.exports = function(file, api) {
 
                 // Update any element references to use vnode.dom
                 j(p.get("value").node)
-                    .find(j.Identifier)
-                    .filter((p2) => (
-                        p2.getValueProperty("name") === el
-                    ))
+                    .find(j.Identifier, { name : el })
                     .forEach(() => s("vnode reference"))
                     .replaceWith(j.memberExpression(
                         j.identifier("vnode"),
@@ -50,10 +46,7 @@ module.exports = function(file, api) {
                 params.get(3).replace();
 
                 j(p.get("value").node)
-                    .find(j.Identifier)
-                    .filter((p2) => (
-                        p2.getValueProperty("name") === vdom
-                    ))
+                    .find(j.Identifier, { name : vdom })
                     .forEach(() => s("vdom reference"))
                     .replaceWith(j.identifier("vnode"));
             }
@@ -66,10 +59,7 @@ module.exports = function(file, api) {
                 params.get(2).replace();
 
                 j(p.get("value").node)
-                    .find(j.Identifier)
-                    .filter((p2) => (
-                        p2.getValueProperty("name") === state
-                    ))
+                    .find(j.Identifier, { name : state })
                     .forEach(() => s("state reference"))
                     .replaceWith(j.memberExpression(
                         j.identifier("vnode"),
@@ -86,12 +76,12 @@ module.exports = function(file, api) {
 
                 // Find a conditional using `!<init>` and use the body as `oncreate`
                 j(p.get("value").node)
-                    .find(j.IfStatement)
-                    .filter((p2) => (
-                        p2.get("test", "operator").value === "!" &&
-                        p2.get("test", "argument").value &&
-                        p2.get("test", "argument").getValueProperty("name") === init
-                    ))
+                    .find(j.IfStatement, {
+                        test : {
+                            argument : { name : init },
+                            operator : "!"
+                        }
+                    })
                     .forEach(() => s(`!${init} statement`))
                     .replaceWith((p2) => {
                         // First add the if statement body as an oncreate method

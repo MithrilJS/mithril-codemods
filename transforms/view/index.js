@@ -9,12 +9,13 @@ module.exports = function(file, api) {
         s = api.stats;
 
     return j(file.source)
-        .find(j.Property)
-        .filter((p) => (
-            p.get("key").getValueProperty("name") === "view" &&
-            j.FunctionExpression.check(p.get("value").node) &&
-            p.get("value", "params").getValueProperty("length") > 0
-        ))
+        .find(j.Property, {
+            key   : { name : "view" },
+            value : {
+                type   : "FunctionExpression",
+                params : [{}]
+            }
+        })
         .forEach((p) => {
             var fn      = p.get("value"),
                 ctrl    = fn.get("params", 0),
@@ -30,8 +31,7 @@ module.exports = function(file, api) {
                 ctrl.replace(j.identifier("vnode"));
 
                 j(fn.get("body").node)
-                    .find(j.Identifier)
-                    .filter((p2) => p2.getValueProperty("name") === arg1)
+                    .find(j.Identifier, { name : arg1 })
                     .filter((p2) => (j.MemberExpression.check(p2.parent.node) ?
                         p2.parent.get("object") === p2 :
                         true
@@ -50,8 +50,7 @@ module.exports = function(file, api) {
                 options.replace();
 
                 j(fn.get("body").node)
-                    .find(j.Identifier)
-                    .filter((p2) => p2.getValueProperty("name") === arg2)
+                    .find(j.Identifier, { name : arg2 })
                     .filter((p2) => (j.MemberExpression.check(p2.parent.node) ?
                         p2.parent.get("object") === p2 :
                         true

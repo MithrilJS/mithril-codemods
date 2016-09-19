@@ -13,18 +13,20 @@ module.exports = function(file, api) {
         s = api.stats;
     
     return j(file.source)
-        .find(j.AssignmentExpression)
-        .filter((p) => (
-            p.get("left", "object").value &&
-            p.get("left", "object", "object").value &&
-            p.get("left", "object", "object").getValueProperty("name") === "m" &&
-            p.get("left", "object", "property").value &&
-            p.get("left", "object", "property").getValueProperty("name") === "route" &&
-            p.get("left", "property").value &&
-            p.get("left", "property").getValueProperty("name") === "mode" &&
-            p.get("right").value &&
-            p.get("right").getValueProperty("value") in conversion
-        ))
+        .find(j.AssignmentExpression, {
+            operator : "=",
+
+            left : {
+                object : {
+                    object   : { name : "m" },
+                    property : { name : "route" }
+                },
+
+                property : { name : "mode" }
+            },
+
+            right : (node) => (node.value in conversion)
+        })
         .forEach(() => s("m.route.mode"))
         .replaceWith((p) => j.callExpression(
             j.memberExpression(

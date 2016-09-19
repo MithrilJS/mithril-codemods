@@ -7,23 +7,27 @@ module.exports = function(file, api) {
         s = api.stats;
     
     return j(file.source)
-        .find(j.MemberExpression)
-        .filter((p) => p.get("property").getValueProperty("name") === "then")
+        .find(j.MemberExpression, {
+            property : { name : "then" }
+        })
+        // Walk all the way down and check for m.request()
         .filter((p) => {
-            // Walk all the way down and check for m.request()
             var o = p.get("object");
 
-            while(o.get("callee").value && j.CallExpression.check(o.get("callee", "object").node)) {
+            while(j.match(o, {
+                callee : {
+                    object : { type : "CallExpression" }
+                }
+            })) {
                 o = o.get("callee", "object");
             }
 
-            return (
-                o.get("callee").value &&
-                o.get("callee", "object").value &&
-                o.get("callee", "object").getValueProperty("name") === "m" &&
-                o.get("callee", "property").value &&
-                o.get("callee", "property").getValueProperty("name") === "request"
-            );
+            return j.match(o, {
+                callee : {
+                    object   : { name : "m" },
+                    property : { name : "request" }
+                }
+            });
         })
         .forEach(() => s("m.request().then()"))
         .replaceWith((p) => j.memberExpression(

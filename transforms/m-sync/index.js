@@ -6,22 +6,27 @@ module.exports = function(file, api) {
     var j = api.jscodeshift;
 
     return j(file.source)
-        .find(j.MemberExpression)
-        .filter((p) => p.get("property").getValueProperty("name") === "then")
+        .find(j.MemberExpression, {
+            property : { name : "then" }
+        })
+        // Walk all the way down and check for m.sync()
         .filter((p) => {
-            // Walk all the way down and check for m.request()
             var o = p.get("object");
 
-            while(o.get("callee").value && j.CallExpression.check(o.get("callee", "object").node)) {
+            while(j.match(o, {
+                callee : {
+                    object : { type : "CallExpression" }
+                }
+            })) {
                 o = o.get("callee", "object");
             }
 
-            if(o.get("callee").value &&
-               o.get("callee", "object").value &&
-               o.get("callee", "object").getValueProperty("name") === "m" &&
-               o.get("callee", "property").value &&
-               o.get("callee", "property").getValueProperty("name") === "sync"
-            ) {
+            if(j.match(o, {
+                callee : {
+                    object   : { name : "m" },
+                    property : { name : "sync" }
+                }
+            })) {
                 p.ref = o.get("callee");
 
                 return true;
