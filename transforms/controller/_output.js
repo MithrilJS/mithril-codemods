@@ -1,7 +1,12 @@
-m.mount(document.body, {
-    oninit: function(options) {
-        options.attrs.fooga;
+m({
+    oninit: function() { }
+});
 
-        thing.options = options.attrs;
+m.mount(document.body, {
+    oninit: function(vnode) {
+        vnode;
+        vnode.attrs.fooga;
+
+        thing.options = vnode.attrs;
     }
 });
