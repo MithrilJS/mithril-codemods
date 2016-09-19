@@ -33,6 +33,7 @@ Options
 - [x] ⚠️ `config` 👉🏻 `oninit`/`onupdate` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function)
 - [x] ⚠️ `m.request().then()` 👉🏻 `m.request().run()` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest)
 - [x] ⚠ `m.sync` 👉🏻 `m.prop.merge` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest)
+- [x] ⚠ `view(ctrl, options)` 👉🏻 `view(vnode)` 📓
 
 ### Key
 
