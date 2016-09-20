@@ -11,26 +11,21 @@ module.exports = function(file, api) {
             callee : {
                 object   : { name : "m" },
                 property : { name : "route" }
-            }
+            },
+
+            arguments : (node) => node.length < 2
         })
-        .replaceWith((p) => {
-            var args = p.get("arguments").value,
-                type = "get";
-
-            if(args.length) {
-                type = "set";
-            }
-
-            return j.callExpression(
+        .replaceWith((p) => j.callExpression(
+            j.memberExpression(
                 j.memberExpression(
-                    j.memberExpression(
-                        j.identifier("m"),
-                        j.identifier("route")
-                    ),
-                    j.identifier(type)
+                    j.identifier("m"),
+                    j.identifier("route")
                 ),
-                args
-            );
-        })
+                j.identifier(
+                    p.get("arguments").getValueProperty("length") ? "set" : "get"
+                )
+            ),
+            p.get("arguments").value
+        ))
         .toSource();
 };
