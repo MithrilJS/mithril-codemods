@@ -8,5 +8,8 @@ m.mount(document.body, {
         options.fooga;
 
         thing.options = options;
+
+        foo(options);
+        foo(thing.options);
     }
 });

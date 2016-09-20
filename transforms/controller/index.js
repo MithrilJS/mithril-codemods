@@ -13,44 +13,34 @@ module.exports = function(file, api) {
             key   : { name : "controller" },
             value : { type : "FunctionExpression" }
         })
-        .forEach(() => s("controller property"))
-        .replaceWith((p) => j.property(
-            "init",
-            j.identifier("oninit"),
-            j.functionExpression(
-                p.get("value").getValueProperty("id"),
-                p.get("value", "params").getValueProperty("length") === 0 ?
-                    [] :
-                    [ j.identifier("vnode") ],
-                p.get("value", "body").node
-            )
-        ))
-        .find(j.Identifier)
-        // .forEach((p) => { debugger; })
-        // .find()
-        //     debugger;
-            
-        //     var fn  = p.get("value"),
-        //         arg = fn.get("params", 0);
+        .forEach((p) => {
+            s("controller property");
 
-        //     // Only update if they were already using options
-        //     if(j.Identifier.check(arg.node)) {
-        //         arg.replace(j.identifier("vnode"));
-                
-        //         j(p.get("value", "body").node)
-        //             .find(j.Identifier, { name : arg })
-        //             .filter((p2) => { debugger; return (j.MemberExpression.check(p2.parent.node) ?
-        //                 p2.parent.get("object") === p2 :
-        //                 true
-        //             )})
-        //             .forEach(() => s("vnode.attrs"))
-        //             .replaceWith(j.memberExpression(
-        //                 j.identifier("vnode"),
-        //                 j.identifier("attrs")
-        //             ));
-        //     }
+            // update name to `oninit`
+            p.get("key").replace(j.identifier("oninit"));
 
+            // No args means we're done
+            if(!p.get("value", "params").getValueProperty("length")) {
+                return;
+            }
+
+            // Update references to first arg w/ `vnode.attrs`
+            j(p.get("value", "body"))
+                .find(j.Identifier, { name : p.get("value", "params", 0).getValueProperty("name") })
+                // Ensure that `arg` is the object being modified
+                // Means that fooga.<arg> will be ignored, but <arg>.fooga will be modified
+                .filter((p2) => (j.MemberExpression.check(p2.parent.node) ?
+                    p2.parent.get("object") === p2 :
+                    true
+                ))
+                .forEach(() => s("vnode.attrs"))
+                .replaceWith(j.memberExpression(
+                    j.identifier("vnode"),
+                    j.identifier("attrs")
+                ));
             
-        // })
+            // Rename first arg to `vnode`
+            p.get("value", "params", 0).replace(j.identifier("vnode"));
+        })
         .toSource();
 };
