@@ -34,7 +34,7 @@ Options
 - [x] ⚠️ `m.request().then()` 👉🏻 `m.request().run()` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest)
 - [x] ⚠ `m.sync` 👉🏻 `m.prop.merge` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest)
 - [x] ⚠ `view(ctrl, options)` 👉🏻 `view(vnode)` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#view-parameters)
-- [ ] svg `xlink` namespacing [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#xlink-namespace-required)
+- [x] svg `xlink` namespacing [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#xlink-namespace-required)
 
 ### Key
 
