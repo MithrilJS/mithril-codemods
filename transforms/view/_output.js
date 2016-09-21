@@ -12,3 +12,8 @@ m.mount(document.body, {
 m.mount(document.body, {
     view : function() { }
 });
+
+// Should work w/ arrow fns
+m.mount(document.body, {
+    view : (vnode) => m("div", vnode.state.fooga)
+});

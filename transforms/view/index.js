@@ -11,10 +11,7 @@ module.exports = function(file, api) {
     return j(file.source)
         .find(j.Property, {
             key   : { name : "view" },
-            value : {
-                type   : "FunctionExpression",
-                params : [{}]
-            }
+            value : j.Function.check
         })
         .forEach((p) => {
             var fn      = p.get("value"),
