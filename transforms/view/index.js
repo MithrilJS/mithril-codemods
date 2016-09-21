@@ -1,6 +1,6 @@
 "use strict";
 
-// No migration link yet
+// https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#view-parameters
 // Convert the first argument to `view` object properties (that are functions) into `vnode`
 // Convert any access to the first param to use `vnode.state.<key>` instead
 // Convert any access to the second param to use `vnode.attrs.<key>` instead
