@@ -1,14 +1,7 @@
 "use strict";
 
-function upwards(start, test) {
-    var curr = start;
-
-    while(curr && !test(curr)) {
-        curr = curr.parent;
-    }
-
-    return curr;
-}
+var upwards = require("../../lib/upwards.js"),
+    replace = require("../../lib/identifier.js").replace;
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function
 // Rewrite all `config` function instances into either oncreate/onupdate
@@ -39,32 +32,23 @@ module.exports = function(file, api) {
             // This one is done early so the rewrites are already done
             // before the potential oncreate/onupdate split down below
             if(names[0]) {
-                j(p.get("value"))
-                    .find(j.Identifier, { name : names[0] })
-                    .forEach(() => s("vnode reference"))
-                    .replaceWith(j.memberExpression(
-                        j.identifier("vnode"),
-                        j.identifier("dom")
-                    ));
+                replace(j, p.get("value"), names[0], j.memberExpression(
+                    j.identifier("vnode"),
+                    j.identifier("dom")
+                ));
             }
 
             // Check for 4th arg, `vdom`, and rewrite as `vnode`
             if(names[3]) {
-                j(p.get("value"))
-                    .find(j.Identifier, { name : names[3] })
-                    .forEach(() => s("vdom reference"))
-                    .replaceWith(j.identifier("vnode"));
+                replace(j, p.get("value"), names[3], j.identifier("vnode"));
             }
 
             // Check for 3rd arg, `state`, and rewrite as `vnode.state`
             if(names[2]) {
-                j(p.get("value"))
-                    .find(j.Identifier, { name : names[2] })
-                    .forEach(() => s("state reference"))
-                    .replaceWith(j.memberExpression(
-                        j.identifier("vnode"),
-                        j.identifier("state")
-                    ));
+                replace(j, p.get("value"), names[2], j.memberExpression(
+                    j.identifier("vnode"),
+                    j.identifier("state")
+                ));
             }
 
             // If it uses isInitialized need to split behavior somewhat
@@ -74,46 +58,54 @@ module.exports = function(file, api) {
                     .find(j.Identifier, { name : names[1] })
                     .forEach((p2) => {
                         var conditional = upwards(p2.parent, (n) => j.IfStatement.check(n.node)),
-                            
+
                             fnBody = "onupdate",
-                            ifBody = "oncreate";
+                            ifBody = "oncreate",
+                            negated;
                         
                         // Something went real bad if this triggers...
                         if(!conditional) {
                             return false;
                         }
-                        
+
+                        // Figure out if the init value has been negated somehow
+                        negated = upwards(
+                            p2,
+                            (n) => j.match(n, {
+                                type     : "UnaryExpression",
+                                operator : "!"
+                            }),
+                            (n) => j.IfStatement.check(n.node)
+                        );
+
                         // Negated means rename `config` to `onupdate`
                         // Use conditional body as `oncreate`
-                        if(j.match(p2.parent, {
-                            type     : "UnaryExpression",
-                            operator : "!",
-                            argument : { name : names[1] }
-                        })) {
+                        if(negated.node) {
                             fnBody = "oncreate";
                             ifBody = "onupdate";
                         }
 
                         p.get("key").replace(j.identifier(ifBody));
                         
-                        // Add the if statement body as the oncreate method
-                        // TODO: creates a function even if the conditional is just
-                        // "return;" which seems silly
+                        // Filter out empty return if blocks, they're ignorable
                         if(j.match(conditional, {
                             consequent : {
-                                body : [{}]
+                                body : [{ type : "ReturnStatement", argument : null }]
                             }
                         })) {
-                            p.parent.get("properties").push(j.property(
-                                "init",
-                                j.identifier(fnBody),
-                                j.functionExpression(
-                                    null,
-                                    [ j.identifier("vnode") ],
-                                    conditional.get("consequent").node
-                                )
-                            ));
+                            return conditional.replace();
                         }
+
+                        // Add the if statement body as a new hook function
+                        p.parent.get("properties").push(j.property(
+                            "init",
+                            j.identifier(fnBody),
+                            j.functionExpression(
+                                null,
+                                [ j.identifier("vnode") ],
+                                conditional.get("consequent").node
+                            )
+                        ));
 
                         return conditional.replace();
                     });
