@@ -18,3 +18,8 @@ m("div", {
         e.redraw = false;
     }
 });
+
+// Shouln't be transformed
+function fooga() {
+    m.redraw.strategy("none");
+}

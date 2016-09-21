@@ -1,6 +1,8 @@
 "use strict";
 
-var on = /^on/i;
+var upwards = require("../../lib/upwards.js"),
+    
+    on = /^on/i;
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#cancelling-redraw-from-event-handlers
 // Converts m.redraw.strategy("none") calls in functions accepting `e` to e.redraw = false;
@@ -20,41 +22,40 @@ module.exports = function(file, api) {
 
             arguments : [{ value : "none" }]
         })
-        .replaceWith((p) => {
-            var fn = p.scope.path,
-                arg;
+        .forEach((p) => {
+            var fn, arg;
 
-            // Go find the nearest scope that is part of a property named "on<something>"
-            while(
-                fn &&
-                !j.Property.check(fn.parent.node) &&
-                fn.parent.get("key").value &&
-                on.test(fn.parent.get("key").getValueProperty("name"))
-            ) {
-                fn = fn.scope.path;
-            }
-
-            if(!fn) {
-                return p;
-            }
-
-            // Determine arg name
-            arg = fn.get("params", 0).getValueProperty("name");
-
-            if(!arg) {
-                return p;
-            }
+            fn = upwards(p, {
+                test : (n) => j.match(n, {
+                    type  : "Property",
+                    key   : { name : on.test.bind(on) },
+                    value : j.Function.check
+                })
+            });
             
+            // Has to have a parent function
+            if(!fn) {
+                return;
+            }
+
+            if(fn.get("value", "params").getValueProperty("length") > 0) {
+                arg = fn.get("value", "params", 0).node;
+            } else {
+                arg = j.identifier("e");
+
+                fn.get("value", "params").push(arg);
+            }
+
             s("m.redraw.strategy(\"none\")");
 
-            return j.assignmentExpression(
+            p.replace(j.assignmentExpression(
                 "=",
                 j.memberExpression(
-                    j.identifier(arg),
+                    arg,
                     j.identifier("redraw")
                 ),
                 j.literal(false)
-            );
+            ));
         })
         .toSource();
 };

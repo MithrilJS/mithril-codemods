@@ -1,6 +1,6 @@
 // Simple
 m("div", {
-    onclick : function(e) {
+    onclick : function() {
         m.redraw.strategy("none");
     }
 });
@@ -18,3 +18,8 @@ m("div", {
         m.redraw.strategy("none");
     }
 });
+
+// Shouln't be transformed
+function fooga() {
+    m.redraw.strategy("none");
+}
