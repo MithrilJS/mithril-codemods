@@ -1,5 +1,15 @@
 "use strict";
 
+function upwards(start, test) {
+    var curr = start;
+
+    while(curr && !test(curr)) {
+        curr = curr.parent;
+    }
+
+    return curr;
+}
+
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function
 // Rewrite all `config` function instances into either oncreate/onupdate
 module.exports = function(file, api) {
@@ -61,46 +71,51 @@ module.exports = function(file, api) {
             if(names[1]) {
                 j(p.get("value"))
                     .find(j.IfStatement)
+                    .find(j.Identifier, { name : names[1] })
                     .forEach((p2) => {
-                        // if(!init) { ... }
-                        // Take conditional body and put into an oncreate function
-                        if(j.match(p2, {
-                            test : {
-                                operator : "!",
-                                argument : { name : names[1] }
+                        var conditional = upwards(p2.parent, (n) => j.IfStatement.check(n.node)),
+                            
+                            fnBody = "onupdate",
+                            ifBody = "oncreate";
+                        
+                        // Something went real bad if this triggers...
+                        if(!conditional) {
+                            return false;
+                        }
+                        
+                        // Negated means rename `config` to `onupdate`
+                        // Use conditional body as `oncreate`
+                        if(j.match(p2.parent, {
+                            type     : "UnaryExpression",
+                            operator : "!",
+                            argument : { name : names[1] }
+                        })) {
+                            fnBody = "oncreate";
+                            ifBody = "onupdate";
+                        }
+
+                        p.get("key").replace(j.identifier(ifBody));
+                        
+                        // Add the if statement body as the oncreate method
+                        // TODO: creates a function even if the conditional is just
+                        // "return;" which seems silly
+                        if(j.match(conditional, {
+                            consequent : {
+                                body : [{}]
                             }
                         })) {
-                            // First add the if statement body as an oncreate method
                             p.parent.get("properties").push(j.property(
                                 "init",
-                                j.identifier("oncreate"),
+                                j.identifier(fnBody),
                                 j.functionExpression(
                                     null,
                                     [ j.identifier("vnode") ],
-                                    p2.get("consequent").node
+                                    conditional.get("consequent").node
                                 )
                             ));
-
-                            // Then delete it from onupdate
-                            return p2.replace();
                         }
 
-                        // if(init) { return; }
-                        // Strip out conditional, rename to oncreate
-                        if(j.match(p2, {
-                            test       : { name : names[1] },
-                            consequent : {
-                                body : [
-                                    { type : "ReturnStatement" }
-                                ]
-                            }
-                        })) {
-                            // Rename function to oncreate
-                            p.get("key").replace(j.identifier("oncreate"));
-                            
-                            // Strip out conditional
-                            return p2.replace();
-                        }
+                        return conditional.replace();
                     });
             }
         })

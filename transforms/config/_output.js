@@ -26,5 +26,9 @@ m("div", {
 m("div", {
     oncreate: function(vnode) {
         vnode.dom.style.color = "blue";
+    },
+
+    onupdate: function(vnode) {
+        return;
     }
 });
