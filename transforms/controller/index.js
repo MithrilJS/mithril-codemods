@@ -13,7 +13,7 @@ module.exports = function(file, api) {
     return j(file.source)
         .find(j.Property, {
             key   : { name : "controller" },
-            value : { type : "FunctionExpression" }
+            value : j.Function.check
         })
         .forEach((p) => {
             s("controller property");

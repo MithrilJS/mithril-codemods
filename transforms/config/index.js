@@ -12,7 +12,7 @@ module.exports = function(file, api) {
     return j(file.source)
         .find(j.Property, {
             key   : { name : "config" },
-            value : { type : "FunctionExpression" }
+            value : j.Function.check
         })
         .forEach((p) => {
             var params = p.get("value", "params"),
