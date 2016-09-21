@@ -57,26 +57,21 @@ module.exports = function(file, api) {
                     .find(j.IfStatement)
                     .find(j.Identifier, { name : names[1] })
                     .forEach((p2) => {
-                        var conditional = upwards(p2.parent, (n) => j.IfStatement.check(n.node)),
+                        var conditional = upwards(p2.parent, { test : (n) => j.IfStatement.check(n.node) }),
 
                             fnBody = "onupdate",
                             ifBody = "oncreate",
                             negated;
                         
-                        // Something went real bad if this triggers...
-                        if(!conditional) {
-                            return false;
-                        }
-
                         // Figure out if the init value has been negated somehow
-                        negated = upwards(
-                            p2,
-                            (n) => j.match(n, {
+                        negated = upwards(p2, {
+                            test : (n) => j.match(n, {
                                 type     : "UnaryExpression",
                                 operator : "!"
                             }),
-                            (n) => j.IfStatement.check(n.node)
-                        );
+                            
+                            limit : (n) => j.IfStatement.check(n.node)
+                        });
 
                         // Negated means rename `config` to `onupdate`
                         // Use conditional body as `oncreate`
