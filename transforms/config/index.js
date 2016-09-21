@@ -107,7 +107,12 @@ module.exports = function(file, api) {
                             )
                         ));
 
-                        return conditional.replace();
+                        conditional.replace();
+
+                        // Remove original hook if it's now empty
+                        if(p.get("value", "body", "body").getValueProperty("length") === 0) {
+                            p.replace();
+                        }
                     });
             }
         })

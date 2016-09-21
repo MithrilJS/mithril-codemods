@@ -12,6 +12,12 @@ m("div", {
 });
 
 m("div", {
+    oncreate: function(vnode) {
+        "oncreate";
+    }
+});
+
+m("div", {
     onupdate: function(vnode) {
         "onupdate";
     },

@@ -12,6 +12,14 @@ m("div", {
 });
 
 m("div", {
+    config : function(el, init) {
+        if(!init) {
+            "oncreate";
+        }
+    }
+});
+
+m("div", {
     config: function(el, init) {
         if(!init) {
             "oncreate";
