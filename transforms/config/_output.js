@@ -1,21 +1,30 @@
 m("div", {
-    onupdate: function() {}
-});
-
-m("div", {
     onupdate: function(vnode) {
-        vnode.dom.style.color = "red";
+        vnode.dom.fooga;
+        fooga.el;
     }
 });
 
 m("div", {
     onupdate: function(vnode) {
-        vnode.dom.style.color = "blue";
+        "onupdate";
+    }
+});
+
+m("div", {
+    onupdate: function(vnode) {
+        "onupdate";
     },
 
     oncreate: function(vnode) {
-        vnode.dom.style.color = "red";
+        "oncreate";
 
         return;
+    }
+});
+
+m("div", {
+    oncreate: function(vnode) {
+        "oncreate";
     }
 });

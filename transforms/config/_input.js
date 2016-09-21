@@ -1,21 +1,34 @@
 m("div", {
-    config: function() {}
+    config: function(el) {
+        el.fooga;
+        fooga.el;
+    }
 });
 
 m("div", {
     config: function(el) {
-        el.style.color = "red";
+        "onupdate";
     }
 });
 
 m("div", {
     config: function(el, init) {
         if(!init) {
-            el.style.color = "red";
+            "oncreate";
 
             return;
         }
 
-        el.style.color = "blue";
+        "onupdate";
+    }
+});
+
+m("div", {
+    config: function(el, init) {
+        if(init) {
+            return;
+        }
+
+        "oncreate";
     }
 });
