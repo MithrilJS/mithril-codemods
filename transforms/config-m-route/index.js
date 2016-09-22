@@ -1,7 +1,7 @@
 "use strict";
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#component-controller-function
-// Convert `controller` object properties (that are functions) to be called `oninit` instead
+// https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mroute-and-anchor-tags
+// Convert `config : m.route` into `oncreate : m.route.link`
 module.exports = function(file, api) {
     var j = api.jscodeshift,
         s = api.stats;
