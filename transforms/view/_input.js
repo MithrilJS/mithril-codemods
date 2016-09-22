@@ -17,3 +17,8 @@ m.mount(document.body, {
 m.mount(document.body, {
     view : (ctrl) => m("div", ctrl.fooga)
 });
+
+// Should work on functions that take "ctrl" as their first param
+function view(ctrl) {
+    return m("div", ctrl.fooga);
+}

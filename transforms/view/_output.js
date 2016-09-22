@@ -17,3 +17,8 @@ m.mount(document.body, {
 m.mount(document.body, {
     view : (vnode) => m("div", vnode.state.fooga)
 });
+
+// Should work on functions that take "ctrl" as their first param
+function view(vnode) {
+    return m("div", vnode.state.fooga);
+}

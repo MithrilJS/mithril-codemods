@@ -1,7 +1,8 @@
 "use strict";
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#view-parameters
-// Convert the first argument to `view` object properties (that are functions) into `vnode`
+// Finds functions w/ "ctrl" as the first param, or "view" properties that are functions
+// Convert the first argument to into `vnode`
 // Convert any access to the first param to use `vnode.state.<key>` instead
 // Convert any access to the second param to use `vnode.attrs.<key>` instead
 module.exports = function(file, api) {
@@ -9,14 +10,21 @@ module.exports = function(file, api) {
         s = api.stats;
 
     return j(file.source)
-        .find(j.Property, {
-            key   : { name : "view" },
-            value : j.Function.check
-        })
+        .find(j.Function)
+        .filter((p) =>
+             // Function with ctrl as first param
+            j.match(p, {
+                params : [{ name : "ctrl" }]
+            }) ||
+            // Property named "view" that is a function
+            j.match(p.parent, {
+                key   : { name : "view" },
+                value : j.Function.check
+            })
+        )
         .forEach((p) => {
-            var fn      = p.get("value"),
-                ctrl    = fn.get("params", 0),
-                options = fn.get("params", 1),
+            var ctrl    = p.get("params", 0),
+                options = p.get("params", 1),
                 arg1, arg2;
             
             s("view property w/ args");
@@ -27,7 +35,7 @@ module.exports = function(file, api) {
 
                 ctrl.replace(j.identifier("vnode"));
 
-                j(fn.get("body").node)
+                j(p.get("body").node)
                     .find(j.Identifier, { name : arg1 })
                     .filter((p2) => (j.MemberExpression.check(p2.parent.node) ?
                         p2.parent.get("object") === p2 :
@@ -46,7 +54,7 @@ module.exports = function(file, api) {
 
                 options.replace();
 
-                j(fn.get("body").node)
+                j(p.get("body").node)
                     .find(j.Identifier, { name : arg2 })
                     .filter((p2) => (j.MemberExpression.check(p2.parent.node) ?
                         p2.parent.get("object") === p2 :
