@@ -75,5 +75,4 @@ module.exports = function(file, api) {
             ))
         )
         .toSource();
-        
 };
