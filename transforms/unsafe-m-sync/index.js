@@ -1,54 +1,24 @@
 "use strict";
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest
-// Convert `m.sync(...).then(...)` into `m.prop.merge(...).run(...)`
+// https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#msync-removed
+// Convert `m.sync(...).then(...)` into `Promise.all(...).then(...)`
 module.exports = function(file, api) {
     var j = api.jscodeshift;
 
     return j(file.source)
-        .find(j.MemberExpression, {
-            property : { name : "then" }
-        })
-        // Walk all the way down and check for m.sync()
-        .filter((p) => {
-            var o = p.get("object");
-
-            while(j.match(o, {
-                callee : {
-                    object : { type : "CallExpression" }
-                }
-            })) {
-                o = o.get("callee", "object");
+        .find(j.CallExpression, {
+            callee : {
+                object   : { name : "m" },
+                property : { name : "sync" }
             }
-
-            if(j.match(o, {
-                callee : {
-                    object   : { name : "m" },
-                    property : { name : "sync" }
-                }
-            })) {
-                p.ref = o.get("callee");
-
-                return true;
-            }
-
-            return false;
         })
-        .replaceWith((p) => {
-            // rewrite m.sync as m.prop.merge
-            p.ref.replace(j.memberExpression(
-                j.memberExpression(
-                    j.identifier("m"),
-                    j.identifier("prop")
-                ),
-                j.identifier("merge")
-            ));
-            
-            // rewrite .then() as .run()
-            return j.memberExpression(
-                p.get("object").node,
-                j.identifier("run")
-            );
-        })
+        // rewrite m.sync as Promise.all
+        .replaceWith((p) => j.callExpression(
+            j.memberExpression(
+                j.identifier("Promise"),
+                j.identifier("all")
+            ),
+            p.get("arguments").value
+        ))
         .toSource();
 };
