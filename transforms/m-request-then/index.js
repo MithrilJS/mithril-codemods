@@ -2,7 +2,7 @@
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest
 // Convert `m.request(...).then(...)` into `m.request(...).run(...)`
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift,
         s = api.stats;
     

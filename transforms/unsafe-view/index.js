@@ -5,7 +5,7 @@
 // Convert the first argument to into `vnode`
 // Convert any access to the first param to use `vnode.state.<key>` instead
 // Convert any access to the second param to use `vnode.attrs.<key>` instead
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift,
         s = api.stats;
 

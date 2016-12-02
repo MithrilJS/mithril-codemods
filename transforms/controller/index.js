@@ -6,7 +6,7 @@ var replace = require("../../lib/identifier.js").replace;
 // Convert `controller` object properties (that are functions) to be called `oninit` instead
 // Change the first param to `vnode`
 // Convert any access to the first param to use vnode.attrs.<key> instead
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift,
         s = api.stats;
 

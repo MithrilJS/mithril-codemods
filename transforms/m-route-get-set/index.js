@@ -3,7 +3,7 @@
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#readingwriting-the-current-route
 // m.route() => m.route.get();
 // m.route("/new-route") => m.route.set("/new-route);
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift;
 
     return j(file.source)

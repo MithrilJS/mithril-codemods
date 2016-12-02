@@ -8,7 +8,7 @@ var conversion = {
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mroute-mode
 // Converts m.route.mode = "..." calls into m.route.prefix()
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift,
         s = api.stats;
     

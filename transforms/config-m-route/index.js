@@ -2,7 +2,7 @@
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mroute-and-anchor-tags
 // Convert `config : m.route` into `oncreate : m.route.link`
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift,
         s = api.stats;
 

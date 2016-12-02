@@ -2,7 +2,7 @@
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mcomponent-removed
 // Convert `m.component()` invocations into just `m()`
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift;
 
     return j(file.source)

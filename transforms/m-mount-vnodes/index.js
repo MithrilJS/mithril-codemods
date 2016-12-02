@@ -2,7 +2,7 @@
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-vnodes-to-mmount-and-mroute
 // Converts raw vnodes passed to m.mount into simple components
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift;
     
     return j(file.source)

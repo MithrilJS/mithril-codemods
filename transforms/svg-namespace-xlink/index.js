@@ -29,7 +29,7 @@ function svg(j, p) {
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#xlink-namespace-required
 // Adds `xlink` namespace to `href` attributes in SVGs
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift,
         parsed = j(file.source);
     

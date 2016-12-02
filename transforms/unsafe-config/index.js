@@ -5,7 +5,7 @@ var upwards = require("../../lib/upwards.js"),
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function
 // Rewrite all `config` function instances into either oncreate/onupdate
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift,
         s = api.stats;
 
@@ -57,6 +57,7 @@ module.exports = function(file, api) {
                     .find(j.IfStatement)
                     .find(j.Identifier, { name : names[1] })
                     .forEach((p2) => {
+                        /* eslint consistent-return: off */
                         var conditional = upwards(p2.parent, { test : (n) => j.IfStatement.check(n.node) }),
 
                             fnBody = "onupdate",

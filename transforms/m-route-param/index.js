@@ -9,7 +9,7 @@ var identifier = require("to-js-identifier");
 // TODO: Doesn't respect existing vnode param name
 //      Those are both really hard to solve because finding the correct function scope
 //      to use is tricky at best
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift;
 
     return j(file.source)

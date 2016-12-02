@@ -2,7 +2,7 @@
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-components-to-m
 // Attempt to ensure that components as args to `m()` are wrapped in their own `m(<component)`
-module.exports = function(file, api) {
+module.exports = (file, api) => {
     var j = api.jscodeshift,
         s = api.stats;
 
