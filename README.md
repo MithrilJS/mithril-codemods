@@ -39,7 +39,11 @@ mithril-codemods -ua **/*.js
 - [x] ⚠️ `m.redraw.strategy("none")` 👉🏻 `e.redraw = false` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#cancelling-redraw-from-event-handlers)
 - [x] ⚠️ `m()` unwrapped components 👉🏻 wrapped components️ [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-components-to-m)
 - [x] ⚠️ `config` 👉🏻 `oninit`/`onupdate` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function)
-- [x] ⚠️ `m.request().then()` 👉🏻 `m.request().run()` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mrequest)
 - [x] ⚠️ `m.sync` 👉🏻 `Promise.all` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#msync-removed)
 - [x] ⚠️ `view(ctrl, options)` 👉🏻 `view(vnode)` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#view-parameters)
-- [ ] ⚠️ `m.prop()` 👉🏻 `prop()` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mprop-removed)
+
+## Impossible Transforms
+
+- [Preventing Unmounting](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#preventing-unmounting)
+- [`m.prop` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mprop-removed)
+
