@@ -12,9 +12,9 @@ $RECYCLE.BIN/
 .DS_Store
 
 # Folders
-temp
-coverage
-test
+temp/
+coverage/
+test/
 
 # Random Stuff
 .gitattributes
