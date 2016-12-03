@@ -5,12 +5,13 @@
   "main": "index.js",
   "bin": "./bin/cli.js",
   "scripts": {
+    "cover": "istanbul cover --print both test",
     "lint": "eslint .",
-    "ospec": "node test",
-    "test": "npm run lint && npm run ospec",
-    "publish-please": "publish-please",
     "prepublish": "publish-please guard",
-    "preversion": "npm test"
+    "preversion": "npm test",
+    "publish-please": "publish-please",
+    "test": "npm run lint && npm run tests",
+    "tests": "node test"
   },
   "repository": "tivac/mithril-codemod",
   "keywords": [
@@ -32,6 +33,7 @@
     "disparity": "^2.0.0",
     "eslint": "^3.4.0",
     "eslint-config-arenanet": "^3.0.1",
+    "istanbul": "^0.4.5",
     "ospec": "^1.0.0",
     "publish-please": "^2.2.0"
   },
