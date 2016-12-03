@@ -10,6 +10,7 @@ var fs   = require("fs"),
 function noop() { }
 
 o.spec("mithril-codemod", () => {
+    
     transforms.forEach((t) => o(t, () => {
         var fn    = require(`../transforms/${t}/`),
             input = `./transforms/${t}/_input.js`,
@@ -24,12 +25,16 @@ o.spec("mithril-codemod", () => {
             stats : noop
         });
 
-        diff = disparity.unified(fs.readFileSync(`./transforms/${t}/_output.js`, "utf8").trim(), result.trim(), {
-            paths : [
-                `/transforms/${t}/_input.js (transformed)`,
-                `./transforms/${t}/_output.js`
-            ]
-        });
+        diff = disparity.unified(
+            fs.readFileSync(`./transforms/${t}/_output.js`, "utf8").trim(),
+            result.trim(),
+            {
+                paths : [
+                    `/transforms/${t}/_input.js (transformed)`,
+                    `./transforms/${t}/_output.js`
+                ]
+            }
+        );
 
         o(diff).equals("")(`\n${diff}`);
     }));
