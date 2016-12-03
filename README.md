@@ -37,17 +37,20 @@ mithril-codemods -ua **/*.js
 - [x] Raw vnodes in `m.mount()`/`m.route()` 👉🏻 Component wrapped vnodes [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-vnodes-to-mmount-and-mroute)
 - [x] Component options 👉🏻 `vnode.attrs` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#component-arguments)
 - [x] svg `xlink` namespacing [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#xlink-namespace-required)
+- [x] `m.sync` 👉🏻 `Promise.all` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#msync-removed)
 
 ## Unsafe Transforms
 
 - [x] ⚠️ `m.redraw.strategy("none")` 👉🏻 `e.redraw = false` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#cancelling-redraw-from-event-handlers)
 - [x] ⚠️ `m()` unwrapped components 👉🏻 wrapped components️ [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#passing-components-to-m)
 - [x] ⚠️ `config` 👉🏻 `oninit`/`onupdate` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function)
-- [x] `m.sync` 👉🏻 `Promise.all` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#msync-removed)
 - [x] ⚠️ `view(ctrl, options)` 👉🏻 `view(vnode)` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#view-parameters)
 
 ## Impossible Transforms
 
 - [Preventing Unmounting](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#preventing-unmounting)
-- [`m.prop` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mprop-removed)
 
+## Warnings
+
+- [`m.prop` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mprop-removed)
+- [`m.redraw(true)` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#synchronous-redraw-removed)
