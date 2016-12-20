@@ -19,11 +19,7 @@ module.exports = (file, api) => {
         .forEach((p) => {
             s("m.redraw(arg)");
 
-            if(!p.value.comments) {
-                p.value.comments = [];
-            }
-
-            p.value.comments.push(comment);
+            p.value.comments = [ comment ];
         })
         .toSource();
 };

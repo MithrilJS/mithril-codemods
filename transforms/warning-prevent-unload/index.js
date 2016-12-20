@@ -31,11 +31,7 @@ module.exports = (file, api) => {
             
             s("onunload preventDefault");
 
-            if(!p.value.comments) {
-                p.value.comments = [];
-            }
-
-            p.value.comments.push(comment);
+            p.value.comments = [ comment ];
         })
         .toSource();
 };
