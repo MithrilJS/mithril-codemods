@@ -38,7 +38,7 @@ mithril-codemods -ua **/*.js
 - [x] Component options ➡️ `vnode.attrs` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#component-arguments)
 - [x] svg `xlink` namespacing [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#xlink-namespace-required)
 - [x] `m.sync` ➡️ `Promise.all` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#msync-removed)
-- [ ] `m.startComputation`/`m.endComputation` removed [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#no-more-redraw-locks)
+- [x] `m.startComputation`/`m.endComputation` removed [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#no-more-redraw-locks)
 
 ## Unsafe Transforms
 
