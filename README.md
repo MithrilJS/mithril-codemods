@@ -47,12 +47,9 @@ mithril-codemods -ua **/*.js
 - [x] ⚠️ `config` ➡️ `oninit`/`onupdate` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#config-function)
 - [x] ⚠️ `view(ctrl, options)` ➡️ `view(vnode)` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#view-parameters)
 
-## Impossible Transforms
-
-- [Preventing Unmounting](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#preventing-unmounting)
-
 ## Warnings
 
 - [`m.prop` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mprop-removed)
 - [`m.redraw(true)` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#synchronous-redraw-removed)
 - [`m.deferred()` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mdeferred-removed)
+- [`onunload` preventing unmounting](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#preventing-unmounting)
