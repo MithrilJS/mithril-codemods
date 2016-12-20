@@ -27,7 +27,8 @@ module.exports = (file, api) => {
             }
 
             // Update references to first arg w/ `vnode.attrs`
-            replace(j,
+            replace(
+                j,
                 p.get("value", "body"),
                 p.get("value", "params", 0).getValueProperty("name"),
                 j.memberExpression(
