@@ -4,7 +4,8 @@
 // m.route() => m.route.get();
 // m.route("/new-route") => m.route.set("/new-route);
 module.exports = (file, api) => {
-    var j = api.jscodeshift;
+    var j = api.jscodeshift,
+        s = api.stats;
 
     return j(file.source)
         .find(j.CallExpression, {
@@ -15,6 +16,7 @@ module.exports = (file, api) => {
 
             arguments : (node) => node.length < 2
         })
+        .forEach(() => s('m.route()/m.route("/route)'))
         .replaceWith((p) => j.callExpression(
             j.memberExpression(
                 j.memberExpression(

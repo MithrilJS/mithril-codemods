@@ -3,7 +3,8 @@
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#passing-vnodes-to-mmount-and-mroute
 // Converts raw vnodes passed to m.route into simple components
 module.exports = (file, api) => {
-    var j = api.jscodeshift;
+    var j = api.jscodeshift,
+        s = api.stats;
     
     return j(file.source)
         .find(j.CallExpression, {
@@ -14,6 +15,7 @@ module.exports = (file, api) => {
 
             arguments : [{}, {}, { type : "ObjectExpression" }]
         })
+        .forEach(() => s("m.route(vnode)"))
         .forEach((p) => j(p.get("arguments", 2))
             .find(j.Property, {
                 value : {

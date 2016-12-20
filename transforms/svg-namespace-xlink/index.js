@@ -31,6 +31,8 @@ function svg(j, p) {
 // Adds `xlink` namespace to `href` attributes in SVGs
 module.exports = (file, api) => {
     var j = api.jscodeshift,
+        s = api.stats,
+
         parsed = j(file.source);
     
     parsed
@@ -47,6 +49,7 @@ module.exports = (file, api) => {
         })
         // Walk up parents, searching for m("svg")
         .filter(svg.bind(null, j))
+        .forEach(() => s('m("use")/m("image")'))
         // Go through object properties and rename href to xlink:href
         .forEach((p) =>
             p.get("arguments", 1, "properties")
@@ -69,6 +72,7 @@ module.exports = (file, api) => {
             ]
         })
         .filter(svg.bind(null, j))
+        .forEach(() => s('m("use href="..."])'))
         .forEach((p) =>
             p.get("arguments", 0).replace(j.literal(
                 p.get("arguments", 0).getValueProperty("value").replace("[href", "[xlink:href")

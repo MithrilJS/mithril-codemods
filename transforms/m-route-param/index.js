@@ -10,7 +10,8 @@ var identifier = require("to-js-identifier");
 //      Those are both really hard to solve because finding the correct function scope
 //      to use is tricky at best
 module.exports = (file, api) => {
-    var j = api.jscodeshift;
+    var j = api.jscodeshift,
+        s = api.stats;
 
     return j(file.source)
         .find(j.CallExpression, {
@@ -23,6 +24,7 @@ module.exports = (file, api) => {
                 property : { name : "param" }
             }
         })
+        .forEach(() => s("m.route.param()"))
         .replaceWith((p) => {
             var prop = p.get("arguments", 0).getValueProperty("value");
             
