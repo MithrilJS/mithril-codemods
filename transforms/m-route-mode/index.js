@@ -6,7 +6,7 @@ var conversion = {
         pathname : ""
     };
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mroute-mode
+// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mroute-mode
 // Converts m.route.mode = "..." calls into m.route.prefix()
 module.exports = (file, api) => {
     var j = api.jscodeshift,
@@ -38,7 +38,7 @@ module.exports = (file, api) => {
             ),
             [
                 j.literal(
-                    conversion[p.get("right").value.value]
+                    conversion[p.get("right").getValueProperty("value")]
                 )
             ]
         ))

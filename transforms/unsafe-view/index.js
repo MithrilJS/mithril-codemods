@@ -1,6 +1,6 @@
 "use strict";
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#view-parameters
+// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#view-parameters
 // Finds functions w/ "ctrl" as the first param, or "view" properties that are functions
 // Convert the first argument to into `vnode`
 // Convert any access to the first param to use `vnode.state.<key>` instead

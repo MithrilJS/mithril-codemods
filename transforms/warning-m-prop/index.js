@@ -1,6 +1,6 @@
 "use strict";
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#mprop-removed
+// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mprop-removed
 // Add a warning around any usage of `m.prop()`
 module.exports = (file, api) => {
     var j = api.jscodeshift,

@@ -3,7 +3,7 @@
 var upwards = require("../../lib/upwards.js"),
     replace = require("../../lib/identifier.js").replace;
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#config-function
+// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#config-function
 // Rewrite all `config` function instances into either oncreate/onupdate
 module.exports = (file, api) => {
     var j = api.jscodeshift,

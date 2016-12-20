@@ -2,7 +2,7 @@
 
 var identifier = require("to-js-identifier");
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/v1.x-migration.md#accessing-route-params
+// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#accessing-route-params
 // Converts m.route.param(<param>) to vnode.attrs.<param>
 //
 // TODO: Doesn't automatically add vnode param if missing
