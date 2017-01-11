@@ -1,5 +1,10 @@
 # Changes
 
+## 3.2.1
+
+- chore: set up travis publishing
+- test: travis tests on node 6/7/4
+
 ## 3.2.0
 
 - docs: change-log added
