@@ -1,5 +1,10 @@
 # Changes
 
+## 3.2.0
+
+- docs: change-log added
+- fix: support more m.route.param() types
+
 ## 3.1.0
 
 - Alignment tweak
