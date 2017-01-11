@@ -1,10 +1,21 @@
 sudo: false
 language: node_js
 node_js:
-  - "node"
-  - "6"
-  - "4"
+  - node
+  - '6'
+  - '4'
 
 cache:
   directories:
-    - node_modules
+  - node_modules
+
+deploy:
+  provider: npm
+  email: npm@patcavit.com
+  api_key:
+    secure: UQ4zU3nyGxd+DxV2SLhiinAxBckvlJOfBDZbLyYDTeUxEQMrn6vgyNyqs/R6h9JLIYpNsCaMiHcWK89JHl7idVaY6dymRGYFIQn98CFINrfKUPPUyW/LyQhAa2xWX1sLOx7E39/WipK40ISKoFlzbxFsHafnsEXSdHzxEcaRecv5S/doW3+Nn2+Ya+9/46hGhmzHvdA/+nv61NbiCCOthaHH4Mn8yaW3MoEy/N2SBDDNhYkj2Tpu05ZhDFGOZWqNYg7upHhQuSul3BEdT6agj0XCC7jy1X2rNLdfRO9Gv9NQUgA8rHBlV9vnp13ZY9+FfBvnfbTN2n7oinnIYfDj5h8FmB5HXeurOsXsST8kyT3bfjn7hTb8yjCmrUnXMv7JTCvXNgIONepf2sLi8qdluH2+PZ5vCS1/bGeioGFVQJVReP9p0zOe0IS1yEMtBWvxF7K1DF9ER3SJBR14sA1EyuMifuyuhP5Y6+jcSd6B7sIvVD3oerzjYKAqvFxSgr5u73PeOrcw6093ikLSxUldBS8q3RV3J0TiadCt4Cs9x20+PTjuuJmUr7d6QnJhe0GebP7i5YpksntHmH/dwF/X4tWJF5kK7ZolVIzDx1jfrGAkRvfkzavpAT2U6VyamrLs4UQNP4oMaUEJznIcUkQNi8cp42cMwzJA+ikURI/nAcA=
+  on:
+    tags: true
+    repo: tivac/mithril-codemods
+    branch: master
+    node: 'node'
