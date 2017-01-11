@@ -6,12 +6,14 @@
   "bin": "./bin/cli.js",
   "scripts": {
     "cover": "istanbul cover --print both test",
+    "commitmsg": "validate-commit-msg",
     "lint": "eslint .",
-    "prepublish": "publish-please guard",
+    "preview": "changes",
+    "test": "node test",
+    "posttest": "npm run lint",
     "preversion": "npm test",
-    "publish-please": "publish-please",
-    "test": "npm run lint && npm run tests",
-    "tests": "node test"
+    "version": "changes",
+    "postversion": "git push --follow-tags"
   },
   "repository": "tivac/mithril-codemod",
   "keywords": [
@@ -34,8 +36,7 @@
     "eslint": "^3.4.0",
     "eslint-config-arenanet": "^3.0.1",
     "istanbul": "^0.4.5",
-    "ospec": "^1.0.0",
-    "publish-please": "^2.2.0"
+    "ospec": "^1.0.0"
   },
   "eslintConfig": {
     "extends": "arenanet",
@@ -43,7 +44,8 @@
       "node": true
     },
     "rules": {
-      "newline-per-chained-call": "off"
+      "newline-per-chained-call": "off",
+      "indent": "off"
     }
   }
 }
