@@ -26,16 +26,32 @@ module.exports = (file, api) => {
         })
         .forEach(() => s("m.route.param()"))
         .replaceWith((p) => {
-            var prop = p.get("arguments", 0).getValueProperty("value");
+            var arg = p.get("arguments", 0),
+                node = arg.node,
+                computed = false,
+                prop;
             
+            // Do a weird dance to determine the arg
+            if(j.Literal.check(node)) {
+                prop = arg.getValueProperty("value");
+
+                if(identifier(prop) === prop) {
+                    node = j.identifier(prop);
+                } else {
+                    computed = true;
+                    j.literal(prop);
+                }
+            } else {
+                computed = true;
+            }
+
             return j.memberExpression(
                 j.memberExpression(
                     j.identifier("vnode"),
                     j.identifier("attrs")
                 ),
-                identifier(prop) === prop ?
-                    j.identifier(prop) :
-                    j.literal(prop)
+                node,
+                computed
             );
         })
         .toSource();
