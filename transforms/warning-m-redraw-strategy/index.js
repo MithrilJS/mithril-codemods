@@ -20,7 +20,7 @@ module.exports = (file, api) => {
         })
         .forEach(() => s("m.redraw.strategy()"))
         .replaceWith((p) => j.template.statements`
-            console.warn("m.redraw.strategy() is deprecated in mithril 1.0");
+            console.warn("m.redraw.strategy() does not exist in mithril 1.0");
 
             if(m.redraw.strategy) {
                 m.redraw.strategy(${p.get("expression", "arguments", 0).node});
