@@ -14,9 +14,8 @@ module.exports = (file, api) => {
             }
         })
         .forEach(() => s("m.component()"))
-        .replaceWith((p) => j.callExpression(
-            j.identifier("m"),
-            p.get("arguments").value
-        ))
+        .replaceWith((p) => j.template.statement`
+            m(${p.get("arguments").value})
+        `)
         .toSource();
 };

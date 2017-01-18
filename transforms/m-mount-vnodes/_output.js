@@ -1,5 +1,5 @@
 m.mount(document.body, {
-  view: function() {
-    return m("div");
-  }
+    view: function() {
+        return m("div");
+    }
 });

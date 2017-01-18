@@ -13,34 +13,25 @@ module.exports = (file, api) => {
         s = api.stats;
     
     return j(file.source)
-        .find(j.AssignmentExpression, {
-            operator : "=",
+        .find(j.ExpressionStatement, {
+            expression : {
+                operator : "=",
 
-            left : {
-                object : {
-                    object   : { name : "m" },
-                    property : { name : "route" }
+                left : {
+                    object : {
+                        object   : { name : "m" },
+                        property : { name : "route" }
+                    },
+
+                    property : { name : "mode" }
                 },
 
-                property : { name : "mode" }
-            },
-
-            right : (node) => (node.value in conversion)
+                right : (node) => (node.value in conversion)
+            }
         })
         .forEach(() => s("m.route.mode"))
-        .replaceWith((p) => j.callExpression(
-            j.memberExpression(
-                j.memberExpression(
-                    j.identifier("m"),
-                    j.identifier("route")
-                ),
-                j.identifier("prefix")
-            ),
-            [
-                j.literal(
-                    conversion[p.get("right").getValueProperty("value")]
-                )
-            ]
-        ))
+        .replaceWith((p) => j.template.statement`
+            m.route.prefix(${j.literal(conversion[p.get("expression", "right").getValueProperty("value")])});
+        `)
         .toSource();
 };

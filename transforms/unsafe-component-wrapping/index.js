@@ -15,14 +15,17 @@ module.exports = (file, api) => {
             j(p.get("arguments"))
                 .find(j.ObjectExpression, {
                     properties : [
-                        { key : { name : "view" } }
+                        {
+                            key : {
+                                name : "view"
+                            }
+                        }
                     ]
                 })
                 .forEach(() => s("Unwrapped component"))
-                .replaceWith((p2) => j.callExpression(
-                    j.identifier("m"),
-                    [ p2.node ]
-                ));
+                .replaceWith((p2) => j.template.expression`
+                    m(${p2.node})
+                `);
         })
         .toSource();
 };

@@ -7,35 +7,31 @@ module.exports = (file, api) => {
         s = api.stats;
     
     return j(file.source)
-        .find(j.CallExpression, {
-            callee : {
-                object   : { name : "m" },
-                property : { name : "mount" }
-            },
-            arguments : [
-                {},
-                {
-                    
-                    callee    : { name : "m" },
-                    arguments : [
-                        { type : "Literal" }
-                    ]
-                }
-            ]
+        .find(j.ExpressionStatement, {
+            expression : {
+                callee : {
+                    object   : { name : "m" },
+                    property : { name : "mount" }
+                },
+                arguments : [
+                    {},
+                    {
+                        
+                        callee    : { name : "m" },
+                        arguments : [
+                            { type : "Literal" }
+                        ]
+                    }
+                ]
+            }
         })
         .forEach(() => s("m.mount(vnode)"))
-        .forEach((p) => p.get("arguments", 1).replace(j.objectExpression([
-            j.property(
-                "init",
-                j.identifier("view"),
-                j.functionExpression(
-                    null,
-                    [],
-                    j.blockStatement([
-                        j.returnStatement(p.get("arguments", 1).node)
-                    ])
-                )
-            )
-        ])))
+        .replaceWith((p) => j.template.statement`
+            m.mount(${p.get("expression", "arguments", 0).value}, {
+                view: function() {
+                    return ${p.get("expression", "arguments", 1).value};
+                }
+            });
+        `)
         .toSource();
 };
