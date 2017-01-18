@@ -1,5 +1,12 @@
 # Changes
 
+## 3.3.0
+
+- refactor: use console.warn() instead of comments
+- refactor: always run warnings last
+- feat: warn about m.redraw.strategy()
+- refactor: remove m.route.param rewriting
+
 ## 3.2.1
 
 - chore: set up travis publishing
