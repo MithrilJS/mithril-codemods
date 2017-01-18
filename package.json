@@ -8,7 +8,7 @@
     "cover": "istanbul cover --print both test",
     "commitmsg": "validate-commit-msg",
     "lint": "eslint .",
-    "preview": "changes",
+    "preview": "changes || true",
     "test": "node test",
     "posttest": "npm run lint",
     "preversion": "npm test",
