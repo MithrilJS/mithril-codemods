@@ -5,22 +5,32 @@ var fs   = require("fs"),
     
     dirs = fs.readdirSync(path.join(__dirname, "/transforms")),
     
-    safe   = [],
-    unsafe = [];
+    prefixes = [
+        "unsafe",
+        "warning"
+    ],
+
+    out = {};
 
 // Split based on name
 dirs.forEach((dir) => {
-    var t = {
+    var prefix = dir.split("-")[0],
+
+        transform = {
             name : dir,
             file : path.join(__dirname, `./transforms/${dir}/index.js`)
         };
+        
     
-    if(dir.indexOf("unsafe-") === 0) {
-        unsafe.push(t);
-    } else {
-        safe.push(t);
+    if(prefixes.indexOf(prefix) === -1) {
+        prefix = "safe";
     }
+    
+    if(!out[prefix]) {
+        out[prefix] = [];
+    }
+
+    return out[prefix].push(transform);
 });
 
-exports.safe   = safe;
-exports.unsafe = unsafe;
+module.exports = out;

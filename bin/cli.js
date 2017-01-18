@@ -9,7 +9,7 @@ var path = require("path"),
     globby = require("globby"),
     series = require("promise-map-series"),
 
-    transforms = require("../"),
+    types = require("../"),
     
     cli = meow(`
         Usage
@@ -22,7 +22,7 @@ var path = require("path"),
         Examples
         mithril-codemods **/*.js
         mithril-codemods --apply **/*.js
-        mithril-codemods -ua **/*.js
+        mithril-codemods -uwa **/*.js
     `, {
         boolean : [ "unsafe", "apply" ],
         string  : [ "_" ],
@@ -31,19 +31,25 @@ var path = require("path"),
             u : "unsafe",
             h : "help"
         }
-    });
+    }),
+    
+    transforms = types.safe;
 
 if(!cli.input.length) {
-    cli.showHelp();
+    cli.showHelp(0);
 
     return;
 }
 
-globby(cli.input)
-    .then((paths) => series(
-        cli.flags.unsafe ?
-            transforms.safe.concat(transforms.unsafe) :
-            transforms.safe,
+if(cli.flags.unsafe) {
+    transforms = transforms.concat(types.unsafe);
+}
+
+transforms = transforms.concat(types.warning);
+
+globby(cli.input).then((paths) =>
+    series(
+        transforms,
         (transform) => {
             console.log(`${transform.name} running`);
 
@@ -55,4 +61,5 @@ globby(cli.input)
             .then((result) => console.log(`${result.stdout}\n`))
             .catch(console.error.bind(console));
         }
-    ));
+    )
+);
