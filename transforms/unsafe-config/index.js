@@ -31,10 +31,9 @@ module.exports = (file, api) => {
             // This one is done early so the rewrites are already done
             // before the potential oncreate/onupdate split down below
             if(names[0]) {
-                replace(j, p.get("value"), names[0], j.memberExpression(
-                    j.identifier("vnode"),
-                    j.identifier("dom")
-                ));
+                replace(j, p.get("value"), names[0], j.template.expression`
+                    vnode.dom
+                `);
             }
 
             // Check for 4th arg, `vdom`, and rewrite as `vnode`
