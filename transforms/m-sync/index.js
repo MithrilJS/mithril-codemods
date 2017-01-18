@@ -15,12 +15,8 @@ module.exports = (file, api) => {
         })
         .forEach(() => s("m.sync()"))
         // rewrite m.sync as Promise.all
-        .replaceWith((p) => j.callExpression(
-            j.memberExpression(
-                j.identifier("Promise"),
-                j.identifier("all")
-            ),
-            p.get("arguments").value
-        ))
+        .replaceWith((p) => j.template.statement`
+            Promise.all(${p.get("arguments").value})
+        `)
         .toSource();
 };
