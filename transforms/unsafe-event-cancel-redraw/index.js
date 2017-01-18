@@ -1,8 +1,6 @@
 "use strict";
 
-var upwards = require("../../lib/upwards.js"),
-    
-    on = /^on/i;
+var on = /^on/i;
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#cancelling-redraw-from-event-handlers
 // Converts m.redraw.strategy("none") calls in functions accepting `e` to e.redraw = false;
@@ -25,16 +23,13 @@ module.exports = (file, api) => {
         .forEach((p) => {
             var fn, arg;
 
-            fn = upwards(p, {
-                test : (n) => j.match(n, {
-                    type  : "Property",
-                    key   : { name : on.test.bind(on) },
-                    value : j.Function.check
-                })
+            fn = j(p).closest(j.Property, {
+                key   : { name : on.test.bind(on) },
+                value : j.Function.check
             });
             
             // Has to have a parent function
-            if(!fn) {
+            if(!fn.length) {
                 return;
             }
 
