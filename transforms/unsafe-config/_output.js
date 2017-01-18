@@ -24,7 +24,6 @@ m("div", {
 
     oncreate: function(vnode) {
         "oncreate";
-
         return;
     }
 });

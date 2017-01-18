@@ -1,7 +1,6 @@
 "use strict";
 
-var upwards = require("../../lib/upwards.js"),
-    replace = require("../../lib/identifier.js").replace;
+var replace = require("../../lib/identifier.js").replace;
 
 // https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#config-function
 // Rewrite all `config` function instances into either oncreate/onupdate
@@ -45,10 +44,9 @@ module.exports = (file, api) => {
 
             // Check for 3rd arg, `state`, and rewrite as `vnode.state`
             if(names[2]) {
-                replace(j, p.get("value"), names[2], j.memberExpression(
-                    j.identifier("vnode"),
-                    j.identifier("state")
-                ));
+                replace(j, p.get("value"), names[2], j.template.expression`
+                    vnode.state
+                `);
             }
 
             // If it uses isInitialized need to split behavior somewhat
@@ -58,25 +56,20 @@ module.exports = (file, api) => {
                     .find(j.Identifier, { name : names[1] })
                     .forEach((p2) => {
                         /* eslint consistent-return: off */
-                        var conditional = upwards(p2.parent, { test : (n) => j.IfStatement.check(n.node) }),
+                        var conditional = j(p2).closest(j.IfStatement),
 
                             fnBody = "onupdate",
                             ifBody = "oncreate",
                             negated;
                         
                         // Figure out if the init value has been negated somehow
-                        negated = upwards(p2, {
-                            test : (n) => j.match(n, {
-                                type     : "UnaryExpression",
-                                operator : "!"
-                            }),
-                            
-                            limit : (n) => j.IfStatement.check(n.node)
+                        negated = j(p2).closest(j.UnaryExpression, {
+                            operator : "!"
                         });
 
                         // Negated means rename `config` to `onupdate`
                         // Use conditional body as `oncreate`
-                        if(negated.node) {
+                        if(negated.length) {
                             fnBody = "oncreate";
                             ifBody = "onupdate";
                         }
@@ -89,21 +82,21 @@ module.exports = (file, api) => {
                                 body : [{ type : "ReturnStatement", argument : null }]
                             }
                         })) {
-                            return conditional.replace();
+                            return conditional.remove();
                         }
 
                         // Add the if statement body as a new hook function
                         p.parent.get("properties").push(j.property(
                             "init",
                             j.identifier(fnBody),
-                            j.functionExpression(
-                                null,
-                                [ j.identifier("vnode") ],
-                                conditional.get("consequent").node
-                            )
+                            j.template.expression`
+                                function(vnode) {
+                                    ${conditional.get("consequent", "body").value}
+                                }
+                            `
                         ));
 
-                        conditional.replace();
+                        conditional.remove();
 
                         // Remove original hook if it's now empty
                         if(p.get("value", "body", "body").getValueProperty("length") === 0) {
