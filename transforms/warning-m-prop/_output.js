@@ -1,6 +1,3 @@
-var a = /* WARNING: m.prop has been removed from mithril@1.x! */
-m.prop(5);
+var a = console.warn("m.prop has been removed from mithril 1.0") || m.prop(5);
 
-// Existing comment
-/* WARNING: m.prop has been removed from mithril@1.x! */
-m.prop(10);
+console.warn("m.prop has been removed from mithril 1.0") || m.prop(10);

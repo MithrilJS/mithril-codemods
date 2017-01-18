@@ -1,6 +1,4 @@
-var a = /* WARNING: m.deferred has been removed from mithril@1.x! */
-m.deferred();
+var a = console.warn("m.deferred has been removed from mithril 1.0") || m.deferred();
 
 // Existing comment
-/* WARNING: m.deferred has been removed from mithril@1.x! */
-m.deferred();
+console.warn("m.deferred has been removed from mithril 1.0") || m.deferred();

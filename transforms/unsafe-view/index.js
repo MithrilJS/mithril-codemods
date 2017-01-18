@@ -42,10 +42,9 @@ module.exports = (file, api) => {
                         true
                     ))
                     .forEach(() => s("vnode.state"))
-                    .replaceWith(j.memberExpression(
-                        j.identifier("vnode"),
-                        j.identifier("state")
-                    ));
+                    .replaceWith(j.template.expression`
+                        vnode.state
+                    `);
             }
 
             // Remove `options` and update references
@@ -61,10 +60,9 @@ module.exports = (file, api) => {
                         true
                     ))
                     .forEach(() => s("vnode.attrs"))
-                    .replaceWith(j.memberExpression(
-                        j.identifier("vnode"),
-                        j.identifier("attrs")
-                    ));
+                    .replaceWith(j.template.expression`
+                        vnode.attrs
+                    `);
             }
         })
         .toSource();

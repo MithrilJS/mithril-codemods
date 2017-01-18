@@ -4,9 +4,7 @@
 // Add a warning around any usage of `m.redraw()` that accepts an argument
 module.exports = (file, api) => {
     var j = api.jscodeshift,
-        s = api.stats,
-        
-        comment = j.commentBlock(" WARNING: m.redraw() ignores args ");
+        s = api.stats;
 
     return j(file.source)
         .find(j.CallExpression, {
@@ -16,10 +14,9 @@ module.exports = (file, api) => {
             },
             arguments : (node) => node.length
         })
-        .forEach((p) => {
-            s("m.redraw(arg)");
-
-            p.value.comments = [ comment ];
-        })
+        .forEach(() => s("m.redraw(arg)"))
+        .replaceWith((p) => j.template.expression`
+            console.warn("m.redraw ignores arguments in mithril 1.0") || ${p.value}
+        `)
         .toSource();
 };

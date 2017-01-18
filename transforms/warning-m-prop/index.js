@@ -4,9 +4,7 @@
 // Add a warning around any usage of `m.prop()`
 module.exports = (file, api) => {
     var j = api.jscodeshift,
-        s = api.stats,
-        
-        comment = j.commentBlock(" WARNING: m.prop has been removed from mithril@1.x! ");
+        s = api.stats;
 
     return j(file.source)
         .find(j.CallExpression, {
@@ -15,10 +13,9 @@ module.exports = (file, api) => {
                 property : { name : "prop" }
             }
         })
-        .forEach((p) => {
-            s("m.prop");
-
-            p.value.comments = [ comment ];
-        })
+        .forEach(() => s("m.prop"))
+        .replaceWith((p) => j.template.expression`
+            console.warn("m.prop has been removed from mithril 1.0") || ${p.value}
+        `)
         .toSource();
 };
