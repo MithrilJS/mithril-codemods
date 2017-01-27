@@ -8,24 +8,22 @@ module.exports = (file, api) => {
         s = api.stats;
 
     return j(file.source)
-        .find(j.ExpressionStatement, {
-            expression : {
-                callee : {
-                    object   : { name : "m" },
-                    property : { name : "route" }
-                },
+        .find(j.CallExpression, {
+            callee : {
+                object   : { name : "m" },
+                property : { name : "route" }
+            },
 
-                arguments : (node) => node.length < 2
-            }
+            arguments : (node) => node.length < 2
         })
         .forEach(() => s('m.route()/m.route("/route)'))
         .replaceWith((p) => (
-            p.get("expression", "arguments").getValueProperty("length") ?
-                j.template.statement`
-                    m.route.set(${p.get("expression", "arguments").value});
+            p.get("arguments").getValueProperty("length") ?
+                j.template.expression`
+                    m.route.set(${p.get("arguments").value})
                 ` :
-                j.template.statement`
-                    m.route.get();
+                j.template.expression`
+                    m.route.get()
                 `
             )
         )
