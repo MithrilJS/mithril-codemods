@@ -1,5 +1,9 @@
 # Changes
 
+## 3.3.1
+
+- fix: Expressions, not statements for m.route()
+
 ## 3.3.0
 
 - refactor: use console.warn() instead of comments
