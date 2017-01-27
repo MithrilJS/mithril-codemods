@@ -7,17 +7,15 @@ module.exports = (file, api) => {
         s = api.stats;
 
     return j(file.source)
-        .find(j.ExpressionStatement, {
-            expression : {
-                callee : {
-                    object   : { name : "m" },
-                    property : { name : "module" }
-                }
+        .find(j.CallExpression, {
+            callee : {
+                object   : { name : "m" },
+                property : { name : "module" }
             }
         })
         .forEach(() => s("m.module()"))
-        .replaceWith((p) => j.template.statement`
-            m.mount(${p.get("expression", "arguments").value});
+        .replaceWith((p) => j.template.expression`
+            m.mount(${p.get("arguments").value})
         `)
         .toSource();
 };

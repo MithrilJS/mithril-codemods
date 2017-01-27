@@ -15,7 +15,7 @@ module.exports = (file, api) => {
         })
         .forEach(() => s("m.sync()"))
         // rewrite m.sync as Promise.all
-        .replaceWith((p) => j.template.statement`
+        .replaceWith((p) => j.template.expression`
             Promise.all(${p.get("arguments").value})
         `)
         .toSource();
