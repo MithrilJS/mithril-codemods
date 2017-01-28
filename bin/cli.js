@@ -13,23 +13,20 @@ var path = require("path"),
     
     cli = meow(`
         Usage
-        $ mithril-codemods [<file|glob> ...]
+            $ mithril-codemods [<file|glob> ...]
 
         Options
-        --unsafe, -u    Use unsafe transforms
-        --apply,  -a    Apply transforms (instead of a dry run)
+            --unsafe, -u    Use unsafe transforms
+            --apply,  -a    Apply transforms (instead of a dry run)
 
         Examples
-        mithril-codemods **/*.js
-        mithril-codemods --apply **/*.js
-        mithril-codemods -uwa **/*.js
+            mithril-codemods **/*.js
+            mithril-codemods --apply **/*.js
     `, {
         boolean : [ "unsafe", "apply" ],
-        string  : [ "_" ],
         alias   : {
             a : "apply",
-            u : "unsafe",
-            h : "help"
+            u : "unsafe"
         }
     }),
     
