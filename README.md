@@ -14,42 +14,69 @@ Use [`jscodeshift`](https://github.com/facebook/jscodeshift) to help automate th
 > mithril-codemods --help
 
 Usage
-$ mithril-codemods [<file|glob> ...]
+    $ mithril-codemods [<file|glob> ...]
 
 Options
---unsafe, -u    Use unsafe transforms
---apply,  -a    Apply transforms (instead of a dry run)
+    --unsafe, -u    Use unsafe transforms
+    --apply,  -a    Apply transforms (instead of a dry run)
 
 Examples
-mithril-codemods **/*.js
-mithril-codemods --apply **/*.js
-mithril-codemods -ua **/*.js
+    mithril-codemods **/*.js
+    mithril-codemods --apply **/*.js
+    mithril-codemods -ua some/specific/file.js
 ```
 
-## Safe Transforms
+## Transforms
 
-- [x] `m.component()` ➡️ `m()` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mcomponent-removed)
-- [x] `controller` ➡️ `oninit` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#component-controller-function)
-- [x] `m.route.mode` ➡️ `m.route.prefix()` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mroutemode)
-- [x] `m.route()`/`m.route("route")` ➡️ `m.route.get()`/`m.route.set("route")` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#readingwriting-the-current-route)
-- [x] `config: m.route` ➡️ `oncreate: m.route.link` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mroute-and-anchor-tags)
-- [x] `m.route.param()` ➡️ `vnode.attrs` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#accessing-route-params)
-- [x] Raw vnodes in `m.mount()`/`m.route()` ➡️ Component wrapped vnodes [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#passing-vnodes-to-mmount-and-mroute)
-- [x] Component options ➡️ `vnode.attrs` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#component-arguments)
-- [x] svg `xlink` namespacing [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#xlink-namespace-required)
-- [x] `m.sync` ➡️ `Promise.all` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#msync-removed)
-- [x] `m.startComputation`/`m.endComputation` removed [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#no-more-redraw-locks)
+### Safe
 
-## Unsafe Transforms
+[Replace `m.component()` with `m()`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mcomponent-removed)
 
-- [x] ⚠️ `m.redraw.strategy("none")` ➡️ `e.redraw = false` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#cancelling-redraw-from-event-handlers)
-- [x] ⚠️ `m()` unwrapped components ➡️ wrapped components️ [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#passing-components-to-m)
-- [x] ⚠️ `config` ➡️ `oninit`/`onupdate` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#config-function)
-- [x] ⚠️ `view(ctrl, options)` ➡️ `view(vnode)` [📓](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#view-parameters)
+```js
+m.component(component, { arg : "1" });
 
-## Warnings
+// becomes
 
-- [`m.prop` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mprop-removed)
-- [`m.redraw(true)` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#synchronous-redraw-removed)
-- [`m.deferred()` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mdeferred-removed)
-- [`onunload` preventing unmounting](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#preventing-unmounting)
+m(component, { arg : "1" });
+```
+
+[Rename `controller`️ to `oninit`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#component-controller-function)
+
+```js
+m.mount(document.body, {
+    controller : function(options) {
+        // ...
+    }
+});
+
+// becomes
+m.mount(document.body, {
+    oninit : function(vnode) {
+        // ...
+    }
+});
+```
+
+[Rename `m.route.mode` to `m.route.prefix()` and adjust args](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mroutemode)
+[Rename `m.route()`/`m.route("route")` to `m.route.get()`/`m.route.set("route")`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#readingwriting-the-current-route)
+[Replace `config: m.route` ️w️i️t️h️ `oncreate: m.route.link`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mroute-and-anchor-tags)
+[Replace `m.route.param()` with `vnode.attrs`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#accessing-route-params)
+[Wrap raw vnodes in `m.mount()`/`m.route()`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#passing-vnodes-to-mmount-and-mroute)
+[Replace `options` with `vnode.attrs`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#component-arguments)
+[Add `xlink` namespacing to `<svg>`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#xlink-namespace-required)
+[Replace `m.sync` with `Promise.all`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#msync-removed)
+[Remove `m.startComputation`/`m.endComputation`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#no-more-redraw-locks)
+
+### ⚠️️️ Unsafe ⚠️
+
+[Convert `m.redraw.strategy("none")` to `e.redraw = false`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#cancelling-redraw-from-event-handlers)
+[Wrap unwrapped components](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#passing-components-to-m)
+[Replace `config` with `oninit`/`onupdate`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#config-function)
+[Rewrite `view(ctrl, options)` as `view(vnode)`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#view-parameters)
+
+### Warnings
+
+[`m.prop` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mprop-removed)
+[`m.redraw(true)` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#synchronous-redraw-removed)
+[`m.deferred()` removed](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mdeferred-removed)
+[`onunload` preventing unmounting](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#preventing-unmounting)
