@@ -22,6 +22,7 @@ var path = require("path"),
         Examples
             mithril-codemods **/*.js
             mithril-codemods --apply **/*.js
+            mithril-codemods -ua some/specific/file.js
     `, {
         boolean : [ "unsafe", "apply" ],
         alias   : {
