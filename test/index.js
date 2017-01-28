@@ -44,25 +44,6 @@ o.spec("mithril-codemod", () => {
             )
         )
     );
-
-    // o.spec("cli", () => {
-    //     var cli = require.resolve("../bin/cli.js");
-
-    //     o("should show help when no paths are provided", (done, timeout) => {
-    //         timeout(500);
-            
-    //         execa(cli).then((result) => {
-    //             console.log("result", result);
-
-    //             done();
-    //         })
-    //         .catch((error) => {
-    //             console.log("error", error);
-                
-    //             done();
-    //         });
-    //     })
-    // });
 });
 
 o.run();
