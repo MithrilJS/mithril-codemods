@@ -36,7 +36,6 @@ Examples
 m.component(component, { arg : "1" });
 
 // becomes
-
 m(component, { arg : "1" });
 ```
 
@@ -58,8 +57,42 @@ m.mount(document.body, {
 ```
 
 [Rename `m.route.mode` to `m.route.prefix()` and adjust args](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mroutemode)
+
+```js
+m.route.mode = "search";
+m.route.mode = "hash";
+m.route.mode = "pathname";
+
+// becomes
+m.route.prefix("?");
+m.route.prefix("#");
+m.route.prefix("");
+```
+
 [Rename `m.route()`/`m.route("route")` to `m.route.get()`/`m.route.set("route")`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#readingwriting-the-current-route)
+
+```js
+m.route();
+m.route("/new-route");
+
+// becomes
+m.route.get();
+m.route.set("/new-route");
+```
+
 [Replace `config: m.route` ️w️i️t️h️ `oncreate: m.route.link`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mroute-and-anchor-tags)
+
+```js
+m("a[href=github.com]", {
+    config: m.route
+});
+
+// becomes
+m("a[href=github.com]", {
+    oncreate: m.route.link
+});
+```
+
 [Replace `m.route.param()` with `vnode.attrs`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#accessing-route-params)
 [Wrap raw vnodes in `m.mount()`/`m.route()`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#passing-vnodes-to-mmount-and-mroute)
 [Replace `options` with `vnode.attrs`](https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#component-arguments)
