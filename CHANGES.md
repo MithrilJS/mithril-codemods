@@ -1,5 +1,10 @@
 # Changes
 
+## 3.4.0
+
+- docs: Readme formatting (#24)
+- feat: controller.onunload rewritten to controller.onremove (#23)
+
 ## 3.3.1
 
 - fix: Expressions, not statements for m.route()
