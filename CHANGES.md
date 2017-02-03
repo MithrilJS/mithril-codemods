@@ -1,5 +1,9 @@
 # Changes
 
+## 3.4.1
+
+- docs: use mithril.js.org for links
+
 ## 3.4.0
 
 - docs: Readme formatting (#24)
