@@ -1,5 +1,9 @@
 # Changes
 
+## 3.3.2
+
+- docs: update links to use mithril.js.org
+
 ## 3.3.1
 
 - fix: Expressions, not statements for m.route()
