@@ -33,6 +33,11 @@ module.exports = (file, api) => {
             if(j.Identifier.check(ctrl.node)) {
                 arg1 = ctrl.getValueProperty("name");
 
+                // Early-out if this has already been transformed
+                if(arg1 === "vnode") {
+                    return;
+                }
+
                 ctrl.replace(j.identifier("vnode"));
 
                 j(p.get("body").node)

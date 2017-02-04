@@ -22,3 +22,10 @@ m.mount(document.body, {
 function view(ctrl) {
     return m("div", ctrl.fooga);
 }
+
+// Shouldn't re-transform if already ported
+m.mount(document.body, {
+    view : function(vnode) {
+        return m("div", vnode.state.fooga);
+    }
+});
