@@ -1,5 +1,10 @@
 # Changes
 
+## 3.4.3
+
+- fix: handle more than just m("...") in raw vnode rule
+- fix: always rename controller properties to oninit (#25)
+
 ## 3.4.2
 
 - fix: don't re-apply view(ctrl) -> view(vnode) transform
