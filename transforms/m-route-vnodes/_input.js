@@ -1,3 +1,4 @@
 m.route(document.body, "/", {
-    "/" : m("div")
+    "/"  : m("div"),
+    "/2" : m("div", { class : "class" })
 });

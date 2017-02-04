@@ -15,7 +15,6 @@ module.exports = (file, api) => {
 
             arguments : [{}, {}, { type : "ObjectExpression" }]
         })
-        .forEach(() => s("m.route(vnode)"))
         .forEach((p) => j(p.get("arguments", 2))
             .find(j.Property, {
                 value : {
@@ -23,19 +22,15 @@ module.exports = (file, api) => {
                     arguments : [{ type : "Literal" }]
                 }
             })
-            .forEach((p2) => p2.get("value").replace(j.objectExpression([
-                j.property(
-                    "init",
-                    j.identifier("view"),
-                    j.functionExpression(
-                        null,
-                        [],
-                        j.blockStatement([
-                            j.returnStatement(p2.get("value", "arguments", 1).node)
-                        ])
-                    )
-                )
-            ])))
+            .forEach(() => s("m.route(vnode)"))
+            .forEach((p2) => p2.get("value").replace(j.template.expression`
+                {
+                    view : function() {
+                        return ${p2.get("value").value};
+                    }
+                }
+            
+            `))
         )
         .toSource();
 };
