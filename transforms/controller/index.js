@@ -12,14 +12,18 @@ module.exports = (file, api) => {
 
     return j(file.source)
         .find(j.Property, {
-            key   : { name : "controller" },
-            value : j.Function.check
+            key   : { name : "controller" }
         })
         .forEach((p) => {
             s("controller property");
 
             // update name to `oninit`
             p.get("key").replace(j.identifier("oninit"));
+
+            // If we don't know what the value is, bail at this point
+            if(!j.match(p, { value : j.Function.check })) {
+                return;
+            }
 
             // No args means we're done
             if(!p.get("value", "params").getValueProperty("length")) {
@@ -42,3 +46,5 @@ module.exports = (file, api) => {
         })
         .toSource();
 };
+
+module.exports.only = true;

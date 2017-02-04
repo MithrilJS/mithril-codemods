@@ -13,3 +13,7 @@ m.mount(document.body, {
         foo(thing.options);
     }
 });
+
+m.mount(document.body, {
+    controller : controller
+});
