@@ -12,7 +12,7 @@ module.exports = (file, api) => {
 
     return j(file.source)
         .find(j.Property, {
-            key   : { name : "controller" }
+            key : { name : "controller" }
         })
         .forEach((p) => {
             s("controller property");
@@ -46,5 +46,3 @@ module.exports = (file, api) => {
         })
         .toSource();
 };
-
-module.exports.only = true;
