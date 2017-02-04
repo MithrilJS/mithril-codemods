@@ -18,13 +18,9 @@ module.exports = (file, api) => {
         .replaceWith(() => j.property(
             "init",
             j.identifier("oncreate"),
-            j.memberExpression(
-                j.memberExpression(
-                    j.identifier("m"),
-                    j.identifier("route")
-                ),
-                j.identifier("link")
-            )
+            j.template.expression`
+                m.route.link
+            `
         ))
         .toSource();
 };
