@@ -35,10 +35,7 @@ module.exports = (file, api) => {
                 j,
                 p.get("value", "body"),
                 p.get("value", "params", 0).getValueProperty("name"),
-                j.memberExpression(
-                    j.identifier("vnode"),
-                    j.identifier("attrs")
-                )
+                j.template.expression`vnode.attrs`
             );
             
             // Rename first arg to `vnode`
