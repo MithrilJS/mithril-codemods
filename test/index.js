@@ -13,13 +13,16 @@ function noop() { }
 o.spec("mithril-codemod", () => {
     Object.keys(transforms).forEach((type) =>
         o.spec(type, () =>
-            transforms[type].forEach((t) =>
-                o(t.name, () => {
-                    var fn    = require(t.file),
-                        input = `./transforms/${t.name}/_input.js`,
+            transforms[type].forEach((t) => {
+                var transform = require(t.file),
+                    
+                    fn = transform.only ? o.only : o;
+                
+                fn(t.name, () => {
+                    var input = `./transforms/${t.name}/_input.js`,
                         result, diff;
                     
-                    result = fn({
+                    result = transform({
                         path   : input,
                         source : fs.readFileSync(input, "utf8")
                     }, {
@@ -41,7 +44,7 @@ o.spec("mithril-codemod", () => {
 
                     o(diff).equals("")(`\n${diff}`);
                 })
-            )
+            })
         )
     );
 });
