@@ -1,5 +1,9 @@
 # Changes
 
+## 3.4.2
+
+- fix: don't re-apply view(ctrl) -> view(vnode) transform
+
 ## 3.4.1
 
 - docs: use mithril.js.org for links
