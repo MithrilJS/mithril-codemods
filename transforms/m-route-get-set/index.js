@@ -16,7 +16,7 @@ module.exports = (file, api) => {
 
             arguments : (node) => node.length < 2
         })
-        .forEach(() => s('m.route()/m.route("/route)'))
+        .forEach(() => s('m.route()/m.route("/route")'))
         .replaceWith((p) => (
             p.get("arguments").getValueProperty("length") ?
                 j.template.expression`
