@@ -1,6 +1,6 @@
 {
   "name": "mithril-codemods",
-  "version": "3.4.3",
+  "version": "3.5.0",
   "description": "Transform mithril@0.2.x code into mithril@1.x using jscodeshift",
   "main": "index.js",
   "bin": "./bin/cli.js",

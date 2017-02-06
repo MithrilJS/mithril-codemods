@@ -1,5 +1,9 @@
 # Changes
 
+## 3.5.0
+
+- feat: m.route.buildQueryString/parseQueryString rewritten to m.buildQueryString/parseQueryString (#30)
+
 ## 3.4.3
 
 - fix: handle more than just m("...") in raw vnode rule
