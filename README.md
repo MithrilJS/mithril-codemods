@@ -42,6 +42,7 @@ These transforms are pretty safe and unlikely to have many false positives.
 - [Add `xlink` namespacing to `<svg>`](http://mithril.js.org/change-log.html#xlink-namespace-required)
 - [Replace `m.sync` with `Promise.all`](http://mithril.js.org/change-log.html#msync-removed)
 - [Remove `m.startComputation`/`m.endComputation`](http://mithril.js.org/change-log.html#no-more-redraw-locks)
+- [Replace `m.route.build/parseQueryString` with `m.build/parseQueryString`](http://mithril.js.org/change-log.html#buildingparsing-query-strings)
 
 ### ⚠️️️ Unsafe ⚠️
 
