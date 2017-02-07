@@ -1,5 +1,9 @@
 # Changes
 
+## 3.5.2
+
+- feat: controller.onunload transform should search more aggressively
+
 ## 3.5.1
 
 - docs: document latest change
