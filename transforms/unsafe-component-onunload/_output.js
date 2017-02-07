@@ -6,7 +6,7 @@ var c = {
 };
 
 // Leave controller
-var c2 = {
+var c = {
     controller : function() {
         this.prop = "value";
     },
@@ -17,12 +17,12 @@ var c2 = {
 };
 
 // Arrow fns
-var c3 = {
+var c = {
     onremove: () => console.log("onunload")
 };
 
 // Not using `this`
-var c4 = {
+var c = {
     controller : function() {
         var ctrl = this;
     },
@@ -30,4 +30,17 @@ var c4 = {
     onremove: function() {
         console.log("onunload");
     }
+};
+
+// Reference
+var c = {
+    onremove: reference
+};
+
+var c = {
+    controller : function() {
+        otherFunc();
+    },
+
+    onremove: reference
 };

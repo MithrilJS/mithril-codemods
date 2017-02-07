@@ -8,7 +8,9 @@ module.exports = (file, api) => {
 
     return j(file.source)
         .find(j.Property, {
-            key   : { name : "controller" },
+            key : {
+                name : (name) => name === "controller" || name === "oninit"
+            },
             value : j.FunctionExpression
         })
         .forEach((prop) => {
@@ -19,8 +21,7 @@ module.exports = (file, api) => {
                     left : {
                         type     : "MemberExpression",
                         property : { name : "onunload" }
-                    },
-                    right : j.FunctionExpression
+                    }
                 })
                 .forEach((p) => {
                     var fn = p.get("right");
