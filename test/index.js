@@ -5,10 +5,11 @@ var fs   = require("fs"),
     o         = require("ospec"),
     execa     = require("execa"),
     disparity = require("disparity"),
+    jscodeshift = require("jscodeshift"),
     
     transforms = require("../index.js");
 
-function noop() { }
+function stats() { }
 
 o.spec("mithril-codemod", () => {
     Object.keys(transforms).forEach((type) =>
@@ -26,9 +27,8 @@ o.spec("mithril-codemod", () => {
                         path   : input,
                         source : fs.readFileSync(input, "utf8")
                     }, {
-                        jscodeshift : require("jscodeshift"),
-                        
-                        stats : noop
+                        jscodeshift,
+                        stats
                     });
 
                     diff = disparity.unified(
@@ -36,7 +36,7 @@ o.spec("mithril-codemod", () => {
                         result.trim(),
                         {
                             paths : [
-                                `/transforms/${t.name}/_input.js (transformed)`,
+                                `./transforms/${t.name}/_input.js (transformed)`,
                                 `./transforms/${t.name}/_output.js`
                             ]
                         }
@@ -47,6 +47,35 @@ o.spec("mithril-codemod", () => {
             })
         )
     );
+
+    o("Multiple transforms", () => {
+        var tasks  = transforms.safe.concat(transforms.unsafe, transforms.warning),
+            source = fs.readFileSync("./test/_input.js", "utf8"),
+            diff;
+
+        tasks.forEach((t) => {
+            source = require(t.file)({
+                path   : "./test/_input.js",
+                source : source
+            }, {
+                jscodeshift,
+                stats
+            });
+        });
+
+        diff = disparity.unified(
+            fs.readFileSync(`./test/_output.js`, "utf8").trim(),
+            source.trim(),
+            {
+                paths : [
+                    "./test/_input.js (transformed)",
+                    "./test/_output.js"
+                ]
+            }
+        );
+
+        o(diff).equals("")(`\n${diff}`);
+    });
 });
 
 o.run();
