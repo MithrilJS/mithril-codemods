@@ -1,5 +1,9 @@
 # Changes
 
+## 3.5.1
+
+- docs: document latest change
+
 ## 3.5.0
 
 - feat: m.route.buildQueryString/parseQueryString rewritten to m.buildQueryString/parseQueryString (#30)
