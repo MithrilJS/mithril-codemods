@@ -24,7 +24,7 @@
   "author": "Pat Cavit <npm@patcavit.com>",
   "license": "MIT",
   "dependencies": {
-    "execa": "^0.6.0",
+    "execa": "0.6.1",
     "globby": "^6.0.0",
     "jscodeshift": "^0.3.28",
     "meow": "^3.7.0",
