@@ -36,7 +36,7 @@
     "disparity": "^2.0.0",
     "eslint": "^3.15.0",
     "eslint-config-arenanet": "^3.3.0",
-    "husky": "^0.13.1",
+    "husky": "^0.13.3",
     "istanbul": "^0.4.5",
     "ospec": "^1.0.0",
     "validate-commit-msg": "^2.8.2"
