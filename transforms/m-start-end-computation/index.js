@@ -1,6 +1,6 @@
 "use strict";
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#no-more-redraw-locks
+// http://mithril.js.org/change-log.md#no-more-redraw-locks
 // Remove instances of m.startComputation()/m.endComputation()
 module.exports = (file, api) => {
     var j = api.jscodeshift,
