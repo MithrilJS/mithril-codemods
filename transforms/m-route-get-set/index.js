@@ -1,6 +1,6 @@
 "use strict";
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#readingwriting-the-current-route
+// https://mithril.js.org/change-log.html#readingwriting-the-current-route
 // m.route() => m.route.get();
 // m.route("/new-route") => m.route.set("/new-route);
 module.exports = (file, api) => {

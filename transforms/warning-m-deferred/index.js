@@ -1,6 +1,6 @@
 "use strict";
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mdeferred-removed
+// https://mithril.js.org/change-log.html#mdeferred-removed
 // Add a warning above any usage of `m.deferred()`
 module.exports = (file, api) => {
     var j = api.jscodeshift,
