@@ -1,6 +1,6 @@
 "use strict";
 
-// https://mithril.js.org/change-log.md#msync-removed
+// https://mithril.js.org/change-log.html#msync-removed
 // Convert `m.sync(...).then(...)` into `Promise.all(...).then(...)`
 module.exports = (file, api) => {
     var j = api.jscodeshift,
