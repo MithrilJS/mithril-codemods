@@ -1,6 +1,6 @@
 "use strict";
 
-// https://mithril.js.org/change-log.md#passing-components-to-m
+// https://mithril.js.org/change-log.html#passing-components-to-m
 // Attempt to ensure that components as args to `m()` are wrapped in their own `m(<component)`
 module.exports = (file, api) => {
     var j = api.jscodeshift,
