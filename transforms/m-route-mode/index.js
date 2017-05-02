@@ -6,7 +6,7 @@ var conversion = {
         pathname : ""
     };
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mroute-mode
+// https://mithril.js.org/change-log.md#mroute-mode
 // Converts m.route.mode = "..." calls into m.route.prefix()
 module.exports = (file, api) => {
     var j = api.jscodeshift,
