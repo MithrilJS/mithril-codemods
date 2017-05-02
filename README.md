@@ -1,9 +1,9 @@
 mithril-codemods [![NPM Version](https://img.shields.io/npm/v/mithril-codemods.svg)](https://www.npmjs.com/package/mithril-codemods) [![NPM License](https://img.shields.io/npm/l/mithril-codemods.svg)](https://www.npmjs.com/package/mithril-codemods)
 ================
 [![NPM Downloads](https://img.shields.io/npm/dm/mithril-codemods.svg)](https://www.npmjs.com/package/mithril-codemods)
-[![Build Status](https://img.shields.io/travis/tivac/mithril-codemods.svg)](https://travis-ci.org/tivac/mithril-codemods)
-[![Dependency Status](https://img.shields.io/david/tivac/mithril-codemods.svg)](https://david-dm.org/tivac/mithril-codemods)
-[![devDependency Status](https://img.shields.io/david/dev/tivac/mithril-codemods.svg)](https://david-dm.org/tivac/mithril-codemods#info=devDependencies)
+[![Build Status](https://img.shields.io/travis/MithrilJS/mithril-codemods.svg)](https://travis-ci.org/MithrilJS/mithril-codemods)
+[![Dependency Status](https://img.shields.io/david/MithrilJS/mithril-codemods.svg)](https://david-dm.org/MithrilJS/mithril-codemods)
+[![devDependency Status](https://img.shields.io/david/dev/MithrilJS/mithril-codemods.svg)](https://david-dm.org/MithrilJS/mithril-codemods#info=devDependencies)
 
 Automated porting of `mithril@0.2` code to `mithril@1.0`.
 
