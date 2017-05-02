@@ -2,7 +2,7 @@
 
 var replace = require("../../lib/identifier.js").replace;
 
-// https://mithril.js.org/change-log.md#config-function
+// https://mithril.js.org/change-log.html#config-function
 // Rewrite all `config` function instances into either oncreate/onupdate
 module.exports = (file, api) => {
     var j = api.jscodeshift,
