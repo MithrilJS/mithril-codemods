@@ -1,6 +1,6 @@
 "use strict";
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mcomponent-removed
+// https://mithril.js.org/change-log.md#mcomponent-removed
 // Convert `m.module()` invocations into `m.mount()`
 module.exports = (file, api) => {
     var j = api.jscodeshift,
