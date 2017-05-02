@@ -2,7 +2,7 @@
 
 var on = /^on/i;
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#cancelling-redraw-from-event-handlers
+// https://mithril.js.org/change-log.html#cancelling-redraw-from-event-handlers
 // Converts m.redraw.strategy("none") calls in functions accepting `e` to e.redraw = false;
 module.exports = (file, api) => {
     var j = api.jscodeshift,
