@@ -2,7 +2,7 @@
 
 var replace = require("../../lib/identifier.js").replace;
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#component-controller-function
+// http://mithril.js.org/change-log.md#component-controller-function
 // Convert `controller` object properties (that are functions) to be called `oninit` instead
 // Change the first param to `vnode`
 // Convert any access to the first param to use vnode.attrs.<key> instead
