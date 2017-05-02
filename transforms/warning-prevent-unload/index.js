@@ -1,6 +1,6 @@
 "use strict";
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#preventing-unmounting
+// https://mithril.js.org/change-log.html#preventing-unmounting
 // Finds .onunload functions that can call e.preventDefault() and adds a warning
 module.exports = (file, api) => {
     var j = api.jscodeshift,

@@ -1,6 +1,6 @@
 "use strict";
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#run-code-on-component-removal
+// https://mithril.js.org/change-log.html#run-code-on-component-removal
 // Convert `controller.onunload` into `controller.onremove`
 module.exports = (file, api) => {
     var j = api.jscodeshift,
