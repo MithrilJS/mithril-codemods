@@ -1,6 +1,6 @@
 "use strict";
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#mroute-and-anchor-tags
+// http://mithril.js.org/change-log.md#mroute-and-anchor-tags
 // Convert `config : m.route` into `oncreate : m.route.link`
 module.exports = (file, api) => {
     var j = api.jscodeshift,
