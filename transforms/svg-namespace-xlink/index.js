@@ -27,7 +27,7 @@ function svg(j, p) {
     return parent;
 }
 
-// https://github.com/lhorie/mithril.js/blob/rewrite/docs/change-log.md#xlink-namespace-required
+// https://mithril.js.org/change-log.html#xlink-namespace-required
 // Adds `xlink` namespace to `href` attributes in SVGs
 module.exports = (file, api) => {
     var j = api.jscodeshift,
